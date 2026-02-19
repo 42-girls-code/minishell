@@ -6,13 +6,13 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:57:28 by ingrid            #+#    #+#             */
-/*   Updated: 2026/02/17 19:40:06 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/02/19 11:39:16 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "libft.h"
+# include "libft.h"
 
 #endif
