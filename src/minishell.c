@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 20:19:24 by ingrid            #+#    #+#             */
-/*   Updated: 2026/02/17 20:20:20 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/02/19 11:39:02 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 int	main(void)
 {
 	ft_printf("Teste Minishell\n");
-	return(0);
+	return (0);
 }
