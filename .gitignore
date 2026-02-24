@@ -1,0 +1,16 @@
+# exec file
+minishell
+
+#vscode
+.vscode
+
+# Object files
+*.o
+
+# Libraries
+*.lib
+*.a
+
+# Executables
+*.exe
+*.out
