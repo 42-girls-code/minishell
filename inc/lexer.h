@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 11:54:23 by ingrid            #+#    #+#             */
-/*   Updated: 2026/02/24 12:54:33 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/02/26 00:29:30 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ typedef struct s_lexer
 	t_lex_state	state;
 	char		*buffer;
 	size_t		buf_size;
+	size_t		word_started;
 	t_token		*tokens;
-	t_token		*last;
+	t_token		*tail;
 	int			error;
 }	t_lexer;
 
@@ -70,11 +71,13 @@ void			add_operador_token(t_lexer *lex, t_token_type type);
 void			add_token(t_lexer *lex, t_token_type type, char *buffer);
 t_token			*new_token(t_token_type type, char *buffer);
 void			free_tokens(t_token *tokens);
-t_token_type	detect_operator(t_lexer *lex, char c);
+t_token_type	detect_operator(t_lexer *lex);
 
 //lexer.c
 t_token			*lexer(char *input);
 void			init_lexer(t_lexer *lex, char *input);
 void			finalize_word_if_needed(t_lexer *lex);
+void			handle_double_quote(t_lexer *lex);
+void			handle_single_quote(t_lexer *lex);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 14:18:45 by ingrid            #+#    #+#             */
-/*   Updated: 2026/02/24 12:54:19 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/02/24 15:19:06 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ void	buffer_add_char(t_lexer *lex, char c)
 
 void	finalize_word_if_needed(t_lexer *lex)
 {
-	if (lex->buf_size > 0)
+	if (lex->word_started)
 	{
 		add_token(lex, TOKEN_WORD, lex->buffer);
 		lex->buf_size = 0;
 		lex->buffer[0] = '\0';
+		lex->word_started = 0;
 	}
 }
