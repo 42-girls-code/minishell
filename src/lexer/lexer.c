@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 12:00:41 by ingrid            #+#    #+#             */
-/*   Updated: 2026/02/26 00:52:45 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/02/27 13:09:55 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,13 @@ t_token	*lexer(char *input)
 		else if (lex.state == LEX_DOUBLE_QUOTE)
 			handle_double_quote(&lex);
 	}
-	if (!lex.error)
-		finalize_word_if_needed(&lex);
 	if (lex.error)
 	{
 		free_tokens(lex.tokens);
 		free(lex.buffer);
 		return (NULL);
 	}
+	finalize_word_if_needed(&lex);
 	free(lex.buffer);
 	return (lex.tokens);
 }
