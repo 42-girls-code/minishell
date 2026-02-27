@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:57:28 by ingrid            #+#    #+#             */
-/*   Updated: 2026/02/19 11:39:16 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/02/24 14:56:35 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include "lexer.h"
 
 #endif
