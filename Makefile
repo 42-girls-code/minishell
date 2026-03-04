@@ -6,7 +6,7 @@
 #    By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/17 17:17:17 by ingrid            #+#    #+#              #
-#    Updated: 2026/02/24 14:41:55 by ingrid           ###   ########.fr        #
+#    Updated: 2026/03/04 13:37:40 by ingrid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ SRCS = $(SRC_DIR)/minishell.c \
 	$(SRC_DIR)/lexer/lex_handle_default_state.c \
 	$(SRC_DIR)/lexer/lex_tokens.c \
 	$(SRC_DIR)/lexer/lex_util.c \
-	$(SRC_DIR)/lexer/lexer.c
+	$(SRC_DIR)/lexer/lexer.c \
+	$(SRC_DIR)/env/envp.c
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

@@ -3,18 +3,118 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilemos-c <ilemos-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:12:41 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/01 12:22:22 by ilemos-c         ###   ########.fr       */
+/*   Updated: 2026/03/02 20:46:05 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-void	env_init(char *envp[])
+void	test_hard_code(void)
 {
-	
+	//test ls -l | wc -l
+	t_ast	*root;
+
+	root = create_node(NODE_PIPE);
+	root->left = create_node(NODE_CMD);
+	root->left->args = ft_split("ls -l", ' ');
+	root->right = create_node(NODE_CMD);
+	root->right->args = ft_split("wc -l", ' ');
+}
+
+t_ast	*create_node(t_node_type type)
+{
+	t_ast	*node;
+
+	node = malloc(sizeof(t_ast));
+	if (!node)
+		return ;
+	node->type = type;
+	node->left = " ";
+	node->right = " ";
+}
+
+int	execute_ast(t_ast *node)
+{
+	if (!node)
+		return (0);
+	if (node->type == NODE_PIPE)
+		return(handle_pipe(node));
+	if (node->type == NODE_CMD)
+		return (handle_command(node));
+	return (0);
+}
+
+// int	handle_pipe(t_ast *node)
+// {
+
+// }
+
+int	handle_command(t_ast *node)
+{
+	if (is_builtin(node->args[0]) && !node->has_pipe)
+		return (execute_builtin(node));
+	else
+		return	(execute_binary(node));
+}
+
+// int	is_builtin(char	*cmd)
+// {
+// 	if (ft_strcmp(cmd, "echo", 4) == 0)
+// 		return (1);
+// 	if (ft_strcmp(cmd, "cd", 2) == 0)
+// 		return (1);
+// 	if (ft_strcmp(cmd, "pwd", 3) == 0)
+// 		return (1);
+// 	if (ft_strcmp(cmd, "export", 5) == 0)
+// 		return (1);
+// 	if (ft_strcmp(cmd, "unset", 5) == 0)
+// 		return (1);
+// 	if (ft_strcmp(cmd, "env", 3) == 0)
+// 		return (1);
+// 	if (ft_strcmp(cmd, "exit", 4) == 0)
+// 		return (1);
+// 	return (0);
+// }
+
+int	execute_builtin(t_ast *node)
+{
+	char	*cmd;
+
+	cmd = node->args[0];
+	if (ft_strcmp(cmd, "echo", 4) == 0)
+		return (ft_echo(node->args));
+	if (ft_strcmp(cmd, "cd", 2) == 0)
+		return (ft_cd(node->args));
+	if (ft_strcmp(cmd, "pwd", 3) == 0)
+		return (ft_pwd());
+	// if (ft_strcmp(cmd, "export", 5) == 0)
+	// 	return (ft_export(node->args));
+	// if (ft_strcmp(cmd, "unset", 5) == 0)
+	// 	return (ft_unset(node->args));
+	// if (ft_strcmp(cmd, "env", 3) == 0)
+	// 	return (ft_env(g_minishell.env_list));
+	// if (ft_strcmp(cmd, "exit", 4) == 0)
+	// 	return (ft_exit());
+	return (0);
+}
+
+int	ft_pwd(void)
+{
+	char	cwd[1024];
+
+	if (getcwd(cwd, sizeof(cwd)))
+	{
+		ft_printf("%s\n", cwd);
+		return (0);
+	}
+	else
+	{
+		perror("pwd");
+		return (1);
+	}
 }
 
 // char	*ft_getenv(char *envp[])
