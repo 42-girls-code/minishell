@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilemos-c <ilemos-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:12:41 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/07 19:45:50 by ilemos-c         ###   ########.fr       */
+/*   Updated: 2026/03/08 15:10:15 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	execute_ast(t_ast *node, t_envp *env_list, char *envp[])
 		return (exec_and_or(node->left, node->right, 1, env_list));
 	return (0);
 }
-
+//grupo
 static void	setup_redirection(t_ast *cmd, int fd[2])
 {
 	int	flags;
@@ -52,8 +52,8 @@ static void	handle_child(t_ast *cmd, t_envp *env_list, char *envp[], int fd[2])
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
 	if (is_builtin(cmd->args[0]))
-		exit(exec_builtin(cmd, env_list)); //pendente
-	path = get_cmd_path(cmd->args[0], env_list);
+		exit(exec_builtin(cmd, env_list));
+	path = get_cmd_path(cmd->args[0], envp);
 	if (!path)
 		exit(127);
 	execve(path, cmd->args, envp);
@@ -102,7 +102,7 @@ int	is_builtin(char *cmd)
 
 char	**arr_builtin(void)
 {
-	char	*builtins[8];
+	static char	*builtins[8];
 
 	builtins[0] = "echo";
 	builtins[1] = "cd";
@@ -114,53 +114,42 @@ char	**arr_builtin(void)
 	builtins[7] = NULL;
 	return (builtins);
 }
+//FIM GRUPO
 
-// int	is_builtin(char	*cmd)
-// {
-// 	if (ft_strcmp(cmd, "echo", 4) == 0)
-// 		return (1);
-// 	if (ft_strcmp(cmd, "cd", 2) == 0)
-// 		return (1);
-// 	if (ft_strcmp(cmd, "pwd", 3) == 0)
-// 		return (1);
-// 	if (ft_strcmp(cmd, "export", 5) == 0)
-// 		return (1);
-// 	if (ft_strcmp(cmd, "unset", 5) == 0)
-// 		return (1);
-// 	if (ft_strcmp(cmd, "env", 3) == 0)
-// 		return (1);
-// 	if (ft_strcmp(cmd, "exit", 4) == 0)
-// 		return (1);
-// 	return (0);
-// }
+int	exec_builtin(t_ast *cmd, t_envp *env_list)
+{
+	char	*t_cmd;
 
-// 	cmd = node->args[0];
-// 	if (ft_strcmp(cmd, "echo", 4) == 0)
-// 		return (ft_echo(node->args));
-// 	if (ft_strcmp(cmd, "cd", 2) == 0)
-// 		return (ft_cd(node->args));
-// 	if (ft_strcmp(cmd, "pwd", 3) == 0)
-// 		return (ft_pwd());
-// 	// if (ft_strcmp(cmd, "export", 5) == 0)
-// 	// 	return (ft_export(node->args));
-// 	// if (ft_strcmp(cmd, "unset", 5) == 0)
-// 	// 	return (ft_unset(node->args));
-// 	// if (ft_strcmp(cmd, "env", 3) == 0)
-// 	// 	return (ft_env(g_minishell.env_list));
-// 	// if (ft_strcmp(cmd, "exit", 4) == 0)
-// 	// 	return (ft_exit());
-// 	return (0);
-// }
+	t_cmd = cmd->args[0];
+	if (!ft_strncmp(t_cmd, "echo", ft_strlen(t_cmd)))
+		return (builtin_echo(cmd->args, env_list));
+}
 
-// int	execute_builtin(t_ast *node)
-// {
-// 	char	*cmd;char	*get_env_value(t_envp *list, char *key)
-// {
-// 	while (list)
-// 	{
-// 		if (ft_strncmp(list->key, key, ft_strlen(key)) == 0)
-// 			return (list->value);
-// 		list = list->next;
-// 	}
-// 	return (NULL);
-// }
+int	builtin_echo(char **args, t_envp *env_list)
+{
+	int		i;
+	int		no_newline;
+	char	*value;
+
+	i = 1;
+	no_newline = 0;
+	while (args[i] && !ft_strncmp(args[i], "-n", 2))
+	{
+		no_newline = 1;
+		i++;
+	}
+	while (args[i])
+	{
+		if (args[i][0] == '$')
+			value = get_env_value(env_list, args[i] + 1);
+		else
+			value = args[i];
+		write(1, value, ft_strlen(value));
+		if (args[i + 1])
+			write (1, " ", 1);
+		i++;
+	}
+	if (!no_newline)
+		write(1, "\n", 1);
+	return (0);
+}
