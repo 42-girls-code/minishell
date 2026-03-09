@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilemos-c <ilemos-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:57:28 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/07 12:58:00 by ilemos-c         ###   ########.fr       */
+/*   Updated: 2026/03/09 12:58:36 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include "lexer.h"
 # include "executor.h"
+# include "built_in.h"
 
 typedef struct s_envp
 {
@@ -47,7 +48,7 @@ typedef struct s_ast
 	char			**args;
 	char			*infile;
 	char			*outfile;
-	int 			append;
+	int				append;
 	char			*hearedoc_delim;
 }	t_ast;
 // Fim Cris

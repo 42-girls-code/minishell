@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 17:07:20 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/08 15:07:19 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/09 13:01:46 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**env_list_to_arr(t_envp *env_list)
 		tmp = tmp->next;
 		i++;
 	}
-	array = malloc(sizeof(char*) * (i + 1));
+	array = malloc(sizeof(char *) * (i + 1));
 	if (!array)
 		return (NULL);
 	tmp = env_list;

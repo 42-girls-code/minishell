@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 22:04:35 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/04 13:42:00 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/09 12:59:35 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static t_envp	*new_env_node(char *envp)
 	node = malloc(sizeof(t_envp));
 	if (!node)
 		return (NULL);
-	split_result = ft_split(envp,'=');
+	split_result = ft_split(envp, '=');
 	if (!split_result)
 	{
 		free(node);
