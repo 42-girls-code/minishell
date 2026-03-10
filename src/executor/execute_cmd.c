@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:17:08 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/09 12:59:49 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/09 22:12:38 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	setup_redirection(t_ast *cmd, int fd[2])
 	return (0);
 }
 
-static void	handle_child(t_ast *cmd, t_envp *env_list, char *envp[], int fd[2])
+static void	handle_child(t_ast *cmd, t_envp **env_list, char *envp[], int fd[2])
 {
 	char	*path;
 
@@ -54,7 +54,7 @@ static void	cleanup_fds(int fd[2])
 		close(fd[1]);
 }
 
-int	exec_command(t_ast *cmd, t_envp *env_list, char *envp[])
+int	exec_command(t_ast *cmd, t_envp **env_list, char *envp[])
 {
 	int		fd[2];
 	int		pid;
@@ -67,4 +67,15 @@ int	exec_command(t_ast *cmd, t_envp *env_list, char *envp[])
 	waitpid(pid, &status, 0);
 	cleanup_fds(fd);
 	return (WEXITSTATUS(status));
+}
+
+int	exec_builtin(t_ast *cmd, t_envp **env_list)
+{
+	char	*t_cmd;
+
+	t_cmd = cmd->args[0];
+	if (!ft_strcmp(t_cmd, "echo"))
+		return (builtin_echo(cmd->args, *env_list));
+	if (!ft_strcmp(t_cmd, "cd"))
+		return (builtin_cd(cmd->args, env_list)); // estou aqui!!!
 }

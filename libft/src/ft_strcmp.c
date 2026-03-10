@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.h                                         :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/01 11:10:18 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/09 21:02:02 by ingrid           ###   ########.fr       */
+/*   Created: 2026/03/09 21:55:15 by ingrid            #+#    #+#             */
+/*   Updated: 2026/03/09 22:11:18 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTOR_H
-# define EXECUTOR_H
+#include "libft.h"
 
-# include "minishell.h"
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int	i;
 
-//execute.c
-int		execute_ast(t_ast *node, t_envp *env_list, char *envp[]);
-
-//execute_cmd
-int		exec_command(t_ast *cmd, t_envp *env_list, char *envp[]);
-int		exec_builtin(t_ast *cmd, t_envp *env_list);
-
-//execute_utils.c
-char	*get_cmd_path(char *cmd, char *envp[]);
-
-#endif
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (0);
+}

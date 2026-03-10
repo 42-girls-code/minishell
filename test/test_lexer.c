@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:06:02 by ingrid            #+#    #+#             */
-/*   Updated: 2026/02/27 13:06:35 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/09 20:25:39 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ int	main(void)
 {
 	t_token	*tokens;
 	t_token	*tmp;
-	char	*input = "echo \"teste\" | \"cat < abc\"";
+	char	*input;
 	int		i;
 
+	input = "echo \"teste\" | \"cat < abc\"";
 	ft_printf("Bem Vindo ao MiniShell\n");
 	tokens = lexer(input);
 	tmp = tokens;
@@ -37,7 +38,6 @@ int	main(void)
 	free_tokens(tokens);
 	return (0);
 }
-
 
 // static void	print_tokens(t_token *tokens)
 // {

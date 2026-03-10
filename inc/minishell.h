@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:57:28 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/09 12:58:36 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/09 20:10:55 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ typedef struct s_ast
 
 t_envp	*init_env(char *envp[]);
 char	*get_env_value(t_envp *list, char *key);
+void	set_env_value(t_envp **env_list, char *key, char *new_value);
+
 void	free_env_list(t_envp *list);
 
 #endif

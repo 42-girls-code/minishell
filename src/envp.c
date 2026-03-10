@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 22:04:35 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/09 12:59:35 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/09 22:16:55 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,23 +74,30 @@ char	*get_env_value(t_envp *list, char *key)
 {
 	while (list)
 	{
-		if (ft_strncmp(list->key, key, ft_strlen(key)) == 0)
+		if (!ft_strcmp(list->key, key))
 			return (list->value);
 		list = list->next;
 	}
 	return (NULL);
 }
 
-void	free_env_list(t_envp *list)
+void	set_env_value(t_envp **env_list, char *key, char *new_value)
 {
-	t_envp	*tmp;
+	t_envp	*current;
+	char	*aux;
 
-	while (list)
+	current = *env_list;
+	while (current)
 	{
-		tmp = list;
-		list = list->next;
-		free (tmp->key);
-		free (tmp->value);
-		free(tmp);
+		if (!ft_strcmp(current->key, key))
+		{
+			free(current->value);
+			current->value = ft_strdup(new_value);
+			return ;
+		}
+		current = current->next;
 	}
+	aux = ft_strjoin(ft_strjoin(key, "="), new_value);
+	add_envp_list(aux, env_list);
+	free(aux);
 }
