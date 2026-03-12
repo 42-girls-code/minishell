@@ -1,19 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/17 20:19:24 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/12 01:22:36 by cris_sky         ###   ########.fr       */
+/*   Created: 2026/03/01 14:18:50 by cris_sky          #+#    #+#             */
+/*   Updated: 2026/03/09 14:48:11 by cris_sky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parser.h"
 
-int	main(void)
+t_ast	*parse(t_token *tokens, t_token **err_token)
 {
-	ft_printf("Teste Minishell\n");
-	return (0);
+	t_ast	*root;
+	t_token	*current;
+
+	if (err_token)
+		*err_token = NULL;
+	if (!tokens)
+		return (NULL);
+	current = tokens;
+	root = parse_expression(&current, err_token);
+	if (!root)
+		return (NULL);
+	if (current != NULL)
+	{
+		if (err_token)
+			*err_token = current;
+		free_ast(root);
+		return (NULL);
+	}
+	return (root);
 }
