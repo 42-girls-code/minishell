@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:28:53 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/09 20:23:03 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/13 11:37:39 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 
 //built_in.c
 int		builtin_echo(char **args, t_envp *env_list);
-int		builtin_cd(char **args, t_envp	*env_list);
+
+int		builtin_cd(char **args, t_envp	**env_list);
 
 //built_in_utils.c
 int		is_builtin(char *cmd);
