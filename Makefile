@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ilemos-c <ilemos-c@student.42.fr>          +#+  +:+       +#+         #
+#    By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/17 17:17:17 by ingrid            #+#    #+#              #
-#    Updated: 2026/03/07 12:33:55 by ilemos-c         ###   ########.fr        #
+#    Updated: 2026/03/15 16:33:00 by ingrid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,11 +46,19 @@ RED = \033[1;31m
 
 # Files
 SRCS = $(SRC_DIR)/minishell.c \
+	$(SRC_DIR)/envp.c \
+	$(SRC_DIR)/envp_utils.c \
 	$(SRC_DIR)/lexer/lex_handle_default_state.c \
 	$(SRC_DIR)/lexer/lex_tokens.c \
 	$(SRC_DIR)/lexer/lex_util.c \
 	$(SRC_DIR)/lexer/lexer.c \
-	$(SRC_DIR)/envp.c
+	$(SRC_DIR)/executor/execute.c \
+	$(SRC_DIR)/executor/execute_utils.c \
+	$(SRC_DIR)/executor/execute_cmd.c \
+	$(SRC_DIR)/executor/execute_pipe.c \
+	$(SRC_DIR)/built-in/built_in.c \
+	$(SRC_DIR)/built-in/built_in_utils.c \
+	$(SRC_DIR)/built-in/built_in_cd.c
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:57:28 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/09 20:10:55 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/15 17:01:04 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "lexer.h"
 # include "executor.h"
 # include "built_in.h"
+# include <sys/wait.h>
 
 typedef struct s_envp
 {
@@ -24,12 +25,6 @@ typedef struct s_envp
 	char			*value;
 	struct s_envp	*next;
 }	t_envp;
-
-typedef struct s_minishell
-{
-	t_envp	*env_list;
-	int		last_status;
-}	t_minishell;
 
 //Cris
 typedef enum e_node_type

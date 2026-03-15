@@ -6,14 +6,14 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 10:22:29 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/13 11:36:39 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/15 17:04:36 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_in.h"
 
 static int	check_args_count(char **args);
-static int	handle_cd_cases(char *arg, t_envp **env_list, char *old_pwd);
+static int	handle_cd_cases(char *arg, t_envp **env_list);
 static int	cd_oldpwd(t_envp **env_list, char *path);
 static void	update_pwd_env(t_envp **env_list, char *old, char *pwd);
 
@@ -24,7 +24,7 @@ int	builtin_cd(char **args, t_envp	**env_list)
 
 	if (!getcwd(old_pwd, PATH_MAX) || check_args_count(args))
 		return (1);
-	if (handle_cd_cases(args[1], env_list, old_pwd))
+	if (handle_cd_cases(args[1], env_list))
 		return (1);
 	if (!getcwd(pwd, PATH_MAX))
 		return (1);
@@ -42,7 +42,7 @@ static int	check_args_count(char **args)
 	return (0);
 }
 
-static int	handle_cd_cases(char *arg, t_envp **env_list, char *old_pwd)
+static int	handle_cd_cases(char *arg, t_envp **env_list)
 {
 	char	*path;
 

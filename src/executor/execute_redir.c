@@ -3,11 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilemos-c <ilemos-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:17:27 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/01 11:17:35 by ilemos-c         ###   ########.fr       */
+/*   Updated: 2026/03/15 16:49:24 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+#include "minishell.h"

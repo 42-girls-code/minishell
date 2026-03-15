@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor_utils.c                                   :+:      :+:    :+:   */
+/*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:17:45 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/08 12:56:08 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/15 17:10:00 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+#include "minishell.h"
 
 static void	ft_free_array(char **array)
 {
@@ -40,7 +41,7 @@ static char	*join_path_cmd(char *path, char *cmd)
 	return (path_cmd);
 }
 
-char	*get_cmd_path(char *cmd, char *envp[])
+char	*get_cmd_path(char *cmd)
 {
 	char	**paths_array;
 	char	*path_result;
@@ -67,4 +68,18 @@ char	*get_cmd_path(char *cmd, char *envp[])
 	}
 	ft_free_array(paths_array);
 	return (NULL);
+}
+
+void	close_fd_and_wait(int fd[2], pid_t pid[2])
+{
+	if (fd[0] > 0)
+	{
+		close(fd[0]);
+		waitpid(pid[0], NULL, 0);
+	}
+	if (fd[1] > 0)
+	{
+		close(fd[1]);
+		waitpid(pid[1], NULL, 0);
+	}
 }
