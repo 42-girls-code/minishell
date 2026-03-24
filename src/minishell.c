@@ -6,14 +6,31 @@
 /*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 20:19:24 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/12 01:22:36 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/03/24 14:57:15 by cris_sky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 int	main(void)
 {
-	ft_printf("Teste Minishell\n");
+	char	*line;
+
+	setup_signals();
+	while (1)
+	{
+		line = readline("minishell$ ");
+		if (!line)
+			break ;
+		if (!is_empty(line))
+		{
+			add_history(line);
+			handle_input(line);
+		}
+		free(line);
+	}
+	rl_clear_history();
 	return (0);
 }

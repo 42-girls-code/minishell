@@ -6,7 +6,7 @@
 #    By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/17 17:17:17 by ingrid            #+#    #+#              #
-#    Updated: 2026/03/09 14:30:23 by cris_sky         ###   ########.fr        #
+#    Updated: 2026/03/24 14:58:26 by cris_sky         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,12 +52,14 @@ SRCS = $(SRC_DIR)/minishell.c \
 	$(SRC_DIR)/lexer/lexer.c \
 	$(SRC_DIR)/parser/ast_utils.c \
 	$(SRC_DIR)/parser/ast_utils2.c \
+	$(SRC_DIR)/parser/input.c \
 	$(SRC_DIR)/parser/parse_command.c \
 	$(SRC_DIR)/parser/parse_command2.c \
 	$(SRC_DIR)/parser/parse_pipeline.c \
 	$(SRC_DIR)/parser/parse_expression.c \
 	$(SRC_DIR)/parser/parse_primary.c \
-	$(SRC_DIR)/parser/parse.c
+	$(SRC_DIR)/parser/parse.c \
+	$(SRC_DIR)/parser/signals.c
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
