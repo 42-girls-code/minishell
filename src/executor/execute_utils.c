@@ -6,12 +6,11 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:17:45 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/15 17:10:00 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/25 11:22:01 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
-#include "minishell.h"
 
 static void	ft_free_array(char **array)
 {

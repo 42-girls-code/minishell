@@ -6,12 +6,11 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:17:08 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/15 16:51:57 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/25 12:16:27 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
-#include "minishell.h"
 
 static void	setup_redirection(t_ast *cmd);
 static void	handle_child(t_ast *cmd, t_envp *env_list, char *envp[]);
@@ -45,9 +44,9 @@ static void	setup_redirection(t_ast *cmd)
 	if (cmd->outfile)
 	{
 		if (cmd->append)
-			fd = open(cmd->outfile, O_CREAT | O_WRONLY | O_APPEND | 0644);
+			fd = open(cmd->outfile, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		else
-			fd = open(cmd->outfile, O_CREAT | O_WRONLY | O_TRUNC | 0644);
+			fd = open(cmd->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (fd < 0)
 			exit(1);
 		dup2(fd, STDOUT_FILENO);

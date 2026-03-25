@@ -6,7 +6,7 @@
 #    By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/17 17:17:17 by ingrid            #+#    #+#              #
-#    Updated: 2026/03/15 16:33:00 by ingrid           ###   ########.fr        #
+#    Updated: 2026/03/25 10:21:50 by ingrid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,8 +39,8 @@ LIBFT = $(LIBFT_DIR)/libft.a
 LIBS = -L$(LIBFT_DIR) -lft -lreadline
 
 # Colors
-RESET =\033[0m
-GREEN =\033[1;32m
+RESET = \033[0m
+GREEN = \033[1;32m
 YELLOW = \033[1;33m
 RED = \033[1;31m
 
@@ -58,7 +58,17 @@ SRCS = $(SRC_DIR)/minishell.c \
 	$(SRC_DIR)/executor/execute_pipe.c \
 	$(SRC_DIR)/built-in/built_in.c \
 	$(SRC_DIR)/built-in/built_in_utils.c \
-	$(SRC_DIR)/built-in/built_in_cd.c
+	$(SRC_DIR)/built-in/built_in_cd.c \
+	$(SRC_DIR)/parser/ast_utils.c \
+	$(SRC_DIR)/parser/ast_utils2.c \
+	$(SRC_DIR)/parser/input.c \
+	$(SRC_DIR)/parser/parse_command.c \
+	$(SRC_DIR)/parser/parse_command2.c \
+	$(SRC_DIR)/parser/parse_pipeline.c \
+	$(SRC_DIR)/parser/parse_expression.c \
+	$(SRC_DIR)/parser/parse_primary.c \
+	$(SRC_DIR)/parser/parse.c \
+	$(SRC_DIR)/parser/signals.c
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

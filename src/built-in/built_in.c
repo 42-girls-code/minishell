@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:30:53 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/13 11:48:48 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/25 11:30:24 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	builtin_pwd(void)
 		ft_putstr_fd("pwd: getcwd impossible\n", 2);
 		return (1);
 	}
-	ft_putstr_fd(pwd , 1);
+	ft_putstr_fd(pwd, 1);
 	ft_putstr_fd("\n", 1);
 	return (0);
 }

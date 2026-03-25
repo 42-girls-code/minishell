@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:10:18 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/15 17:12:40 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/25 11:30:41 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 # define EXECUTOR_H
 
 # include <unistd.h>
+# include "parser.h"
+# include "built_in.h"
 
-typedef struct s_envp	t_envp;
-typedef struct s_ast	t_ast;
+// typedef struct s_envp	t_envp; //se necessário reativo
+// typedef struct s_ast	t_ast; // se necessário reativo
 
 //execute.c
 int		execute_ast(t_ast *node, t_envp *env_list, char *envp[]);

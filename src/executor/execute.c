@@ -6,12 +6,11 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:12:41 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/15 16:46:24 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/25 11:22:15 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
-#include "minishell.h"
 
 int	execute_ast(t_ast *node, t_envp *env_list, char *envp[])
 {

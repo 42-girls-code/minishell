@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:57:28 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/15 17:01:04 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/25 12:09:42 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 # define MINISHELL_H
 
 # include "libft.h"
-# include "lexer.h"
-# include "executor.h"
-# include "built_in.h"
+// # include "parser.h"
+// # include "lexer.h"
+// # include "executor.h"
+// # include "built_in.h"
 # include <sys/wait.h>
 
 typedef struct s_envp
@@ -26,32 +27,18 @@ typedef struct s_envp
 	struct s_envp	*next;
 }	t_envp;
 
-//Cris
-typedef enum e_node_type
-{
-	NODE_COMMAND,
-	NODE_PIPE,
-	NODE_AND,
-	NODE_OR
-}	t_node_type;
-
-typedef struct s_ast
-{
-	t_node_type		type;
-	struct s_ast	*left;
-	struct s_ast	*right;
-	char			**args;
-	char			*infile;
-	char			*outfile;
-	int				append;
-	char			*hearedoc_delim;
-}	t_ast;
-// Fim Cris
-
+//envp.c
 t_envp	*init_env(char *envp[]);
 char	*get_env_value(t_envp *list, char *key);
 void	set_env_value(t_envp **env_list, char *key, char *new_value);
 
+//envp_utils.c
 void	free_env_list(t_envp *list);
+
+extern int	g_signal;
+
+void	setup_signals(void);
+void	handle_input(char *line, char *envp[]); //Ingrid - adicionei o envp
+int		is_empty(char *line);
 
 #endif

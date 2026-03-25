@@ -6,12 +6,11 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:15:57 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/15 17:10:08 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/25 11:22:06 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
-#include "minishell.h"
 
 int	exec_pipe(t_ast *node, t_envp *env_list, char *env[])
 {
