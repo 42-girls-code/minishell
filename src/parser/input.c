@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:56:55 by cris_sky          #+#    #+#             */
-/*   Updated: 2026/03/25 12:09:02 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/26 12:15:35 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,11 @@ int	is_empty(char *line)
 	return (1);
 }
 
-void	handle_input(char *line, char *envp[])
+void	handle_input(char *line, t_envp *env_list)
 {
 	t_token	*tokens;
 	t_token	*err_token;
 	t_ast	*root;
-	t_envp	*env_list;
 
 	tokens = lexer(line);
 	if (!tokens)
@@ -50,9 +49,7 @@ void	handle_input(char *line, char *envp[])
 		free_tokens(tokens);
 		return ;
 	}
-	env_list = init_env(envp); //Ingrid - Criei a lista de envp
-	execute_ast(root, env_list, envp); //Ingrid - chamei o execute
+	execute_ast(root, env_list); //Ingrid - chamei o execute (rever envp)
 	free_ast(root);
 	free_tokens(tokens);
-	free_env_list(env_list); //Ingrid - adicionei
 }

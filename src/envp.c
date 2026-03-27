@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 22:04:35 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/09 22:16:55 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/26 10:50:09 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ static t_envp	*new_env_node(char *envp)
 	else
 		node->value = ft_strdup("");
 	node->next = NULL;
-	free(split_result[0]);
-	free(split_result[1]);
-	free(split_result);
+	free_split(split_result);
 	return (node);
 }
 

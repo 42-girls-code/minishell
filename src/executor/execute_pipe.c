@@ -6,13 +6,15 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:15:57 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/25 11:22:06 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/27 12:53:54 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int	exec_pipe(t_ast *node, t_envp *env_list, char *env[])
+static void	close_fd_and_wait(int fd[2], pid_t pid[2]);
+
+int	exec_pipe(t_ast *node, t_envp *env_list)
 {
 	int		fd[2];
 	pid_t	pid[2];
@@ -24,7 +26,7 @@ int	exec_pipe(t_ast *node, t_envp *env_list, char *env[])
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		close(fd[1]);
-		execute_ast(node->left, env_list, env);
+		execute_ast(node->left, env_list);
 		exit(0);
 	}
 	pid[1] = fork();
@@ -33,9 +35,17 @@ int	exec_pipe(t_ast *node, t_envp *env_list, char *env[])
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[1]);
 		close(fd[0]);
-		execute_ast(node->right, env_list, env);
+		execute_ast(node->right, env_list);
 		exit(0);
 	}
 	close_fd_and_wait(fd, pid);
 	return (0);
+}
+
+static void	close_fd_and_wait(int fd[2], pid_t pid[2])
+{
+	close(fd[0]);
+	close(fd[1]);
+	waitpid(pid[0], NULL, 0);
+	waitpid(pid[1], NULL, 0);
 }

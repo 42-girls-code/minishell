@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:57:28 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/25 12:09:42 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/26 12:24:54 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ void	set_env_value(t_envp **env_list, char *key, char *new_value);
 
 //envp_utils.c
 void	free_env_list(t_envp *list);
+void	free_split(char **split);
+char	**env_list_to_array(t_envp *env_list);
 
 extern int	g_signal;
 
 void	setup_signals(void);
-void	handle_input(char *line, char *envp[]); //Ingrid - adicionei o envp
+void	handle_input(char *line, t_envp *env_list); //Ingrid - adicionei parametros
 int		is_empty(char *line);
 
 #endif

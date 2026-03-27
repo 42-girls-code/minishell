@@ -6,24 +6,26 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:17:08 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/25 12:16:27 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/26 16:31:39 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
 static void	setup_redirection(t_ast *cmd);
-static void	handle_child(t_ast *cmd, t_envp *env_list, char *envp[]);
+static void	handle_child(t_ast *cmd, t_envp *env_list);
 
-int	exec_command(t_ast *cmd, t_envp *env_list, char *envp[])
+int	exec_command(t_ast *cmd, t_envp *env_list)
 {
 	pid_t	pid;
 
+	if (is_builtin(cmd->args[0]))
+		return (exec_builtin(cmd, env_list));
 	pid = fork();
 	if (pid == 0)
 	{
 		setup_redirection(cmd);
-		handle_child(cmd, env_list, envp);
+		handle_child(cmd, env_list);
 	}
 	waitpid(pid, NULL, 0);
 	return (0);
@@ -54,17 +56,20 @@ static void	setup_redirection(t_ast *cmd)
 	}
 }
 
-static void	handle_child(t_ast *cmd, t_envp *env_list, char *envp[])
+static void	handle_child(t_ast *cmd, t_envp *env_list)
 {
 	char	*path;
+	char	**envp_exec;
 
 	if (is_builtin(cmd->args[0]))
 		exit(exec_builtin(cmd, env_list));
 	path = get_cmd_path(cmd->args[0]);
 	if (!path)
 		exit(127);
-	execve(path, cmd->args, envp);
+	envp_exec = env_list_to_array(env_list);
+	execve(path, cmd->args, envp_exec);
 	free(path);
+	ft_free_array(envp_exec);
 	exit(127);
 }
 

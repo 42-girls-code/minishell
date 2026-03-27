@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:10:18 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/25 11:30:41 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/26 16:59:54 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,19 @@
 # include "parser.h"
 # include "built_in.h"
 
-// typedef struct s_envp	t_envp; //se necessário reativo
-// typedef struct s_ast	t_ast; // se necessário reativo
-
 //execute.c
-int		execute_ast(t_ast *node, t_envp *env_list, char *envp[]);
+int		execute_ast(t_ast *node, t_envp *env_list);
 
 //execute_cmd
-int		exec_command(t_ast *cmd, t_envp *env_list, char *envp[]);
+int		exec_command(t_ast *cmd, t_envp *env_list);
 int		exec_builtin(t_ast *cmd, t_envp *env_list);
 
 //execute_utils.c
 char	*get_cmd_path(char *cmd);
-void	close_fd_and_wait(int fd[2], pid_t pid[2]);
+char	*double_join(char *s1, char *s2, char *s3);
+void	ft_free_array(char **array);
 
 // execute_pipe
-int		exec_pipe(t_ast *node, t_envp *env_list, char *env[]);
+int		exec_pipe(t_ast *node, t_envp *env_list);
 
 #endif

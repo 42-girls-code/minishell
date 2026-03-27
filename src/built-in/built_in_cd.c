@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 10:22:29 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/15 17:04:36 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/26 11:14:26 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static int	handle_cd_cases(char *arg, t_envp **env_list)
 		if (!path || chdir(path) == -1)
 			return (1);
 	}
-	if (arg[0] == '-' && !arg[1])
-		return (cd_oldpwd(env_list, path));
+	else if (arg[0] == '-' && !arg[1])
+		return (cd_oldpwd(env_list, NULL)); //alterado //path por NULL
 	else
 	{
 		if (chdir(arg) == -1)
