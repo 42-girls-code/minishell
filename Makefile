@@ -6,7 +6,7 @@
 #    By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/17 17:17:17 by ingrid            #+#    #+#              #
-#    Updated: 2026/03/25 10:21:50 by ingrid           ###   ########.fr        #
+#    Updated: 2026/03/31 18:56:49 by ingrid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,9 @@ SRCS = $(SRC_DIR)/minishell.c \
 	$(SRC_DIR)/parser/parse_expression.c \
 	$(SRC_DIR)/parser/parse_primary.c \
 	$(SRC_DIR)/parser/parse.c \
-	$(SRC_DIR)/parser/signals.c
+	$(SRC_DIR)/parser/signals.c \
+	$(SRC_DIR)/expand/expand.c
+
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

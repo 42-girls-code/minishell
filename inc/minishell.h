@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:57:28 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/26 12:24:54 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/01 21:41:02 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 # define MINISHELL_H
 
 # include "libft.h"
-// # include "parser.h"
-// # include "lexer.h"
-// # include "executor.h"
-// # include "built_in.h"
 # include <sys/wait.h>
 
 typedef struct s_envp
@@ -27,6 +23,12 @@ typedef struct s_envp
 	struct s_envp	*next;
 }	t_envp;
 
+typedef struct s_minishell
+{
+	int		last_status;
+	t_envp	*env;
+}	t_minishell;
+
 //envp.c
 t_envp	*init_env(char *envp[]);
 char	*get_env_value(t_envp *list, char *key);
@@ -35,12 +37,12 @@ void	set_env_value(t_envp **env_list, char *key, char *new_value);
 //envp_utils.c
 void	free_env_list(t_envp *list);
 void	free_split(char **split);
-char	**env_list_to_array(t_envp *env_list);
+char	**env_list_to_array(t_envp *env_list, t_envp *tmp);
 
 extern int	g_signal;
 
 void	setup_signals(void);
-void	handle_input(char *line, t_envp *env_list); //Ingrid - adicionei parametros
+void	handle_input(char *line, t_minishell *shell);
 int		is_empty(char *line);
 
 #endif

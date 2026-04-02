@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in.h                                         :+:      :+:    :+:   */
+/*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/27 13:28:53 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/01 17:35:05 by ingrid           ###   ########.fr       */
+/*   Created: 2026/03/31 18:35:12 by ingrid            #+#    #+#             */
+/*   Updated: 2026/04/01 17:18:36 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILT_IN_H
-# define BUILT_IN_H
+#ifndef EXPAND_H
+# define EXPAND_H
 
-# include "minishell.h"
+# include "parser.h"
 
-# define PATH_MAX 1024
-
-//built_in.c
-int		builtin_echo(char **args);
-int		builtin_pwd(void);
-
-int		builtin_cd(char **args, t_minishell *shell);
-
-//built_in_utils.c
-int		is_builtin(char *cmd);
-char	**arr_builtin(void);
-int		is_parent_builtin(char *cmd);
+void	expand_ast(t_ast *root, t_minishell *shell);
 
 #endif

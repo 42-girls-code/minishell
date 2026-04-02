@@ -6,17 +6,16 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:30:53 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/25 11:30:24 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/31 17:34:49 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_in.h"
 
-int	builtin_echo(char **args, t_envp *env_list)
+int	builtin_echo(char **args)
 {
 	int		i;
 	int		no_newline;
-	char	*value;
 
 	i = 1;
 	no_newline = 0;
@@ -27,11 +26,7 @@ int	builtin_echo(char **args, t_envp *env_list)
 	}
 	while (args[i])
 	{
-		if (args[i][0] == '$')
-			value = get_env_value(env_list, args[i] + 1);
-		else
-			value = args[i];
-		write(1, value, ft_strlen(value));
+		write(1, args[i], ft_strlen(args[i]));
 		if (args[i + 1])
 			write (1, " ", 1);
 		i++;

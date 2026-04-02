@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:15:57 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/27 12:53:54 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/01 17:27:18 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	close_fd_and_wait(int fd[2], pid_t pid[2]);
 
-int	exec_pipe(t_ast *node, t_envp *env_list)
+int	exec_pipe(t_ast *node, t_minishell *shell)
 {
 	int		fd[2];
 	pid_t	pid[2];
@@ -26,7 +26,7 @@ int	exec_pipe(t_ast *node, t_envp *env_list)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		close(fd[1]);
-		execute_ast(node->left, env_list);
+		execute_ast(node->left, shell);
 		exit(0);
 	}
 	pid[1] = fork();
@@ -35,7 +35,7 @@ int	exec_pipe(t_ast *node, t_envp *env_list)
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[1]);
 		close(fd[0]);
-		execute_ast(node->right, env_list);
+		execute_ast(node->right, shell);
 		exit(0);
 	}
 	close_fd_and_wait(fd, pid);

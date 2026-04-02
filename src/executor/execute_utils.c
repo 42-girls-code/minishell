@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:17:45 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/03/26 16:59:14 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/02 16:21:19 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,32 @@ char	*get_cmd_path(char *cmd)
 	}
 	ft_free_array(paths_array);
 	return (NULL);
+}
+
+void	print_strerror(char *cmd)
+{
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(strerror(errno), 2);
+	ft_putstr_fd("\n", 2);
+}
+
+int	open_and_dup(char *file, int flags, int target_fd)
+{
+	int	fd;
+
+	fd = open(file, flags, 0644);
+	if (fd < 0)
+	{
+		perror(file);
+		return (1);
+	}
+	if (dup2(fd, target_fd) < 0)
+	{
+		perror("dup2");
+		close(fd);
+		return (1);
+	}
+	close(fd);
+	return (0);
 }

@@ -6,13 +6,14 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:56:55 by cris_sky          #+#    #+#             */
-/*   Updated: 2026/03/26 12:15:35 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/01 21:45:31 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 #include "executor.h"
+#include "expand.h"
 
 int	is_empty(char *line)
 {
@@ -28,7 +29,7 @@ int	is_empty(char *line)
 	return (1);
 }
 
-void	handle_input(char *line, t_envp *env_list)
+void	handle_input(char *line, t_minishell *shell)
 {
 	t_token	*tokens;
 	t_token	*err_token;
@@ -49,7 +50,8 @@ void	handle_input(char *line, t_envp *env_list)
 		free_tokens(tokens);
 		return ;
 	}
-	execute_ast(root, env_list); //Ingrid - chamei o execute (rever envp)
+	expand_ast(root, shell);
+	shell->last_status = execute_ast(root, shell);
 	free_ast(root);
 	free_tokens(tokens);
 }

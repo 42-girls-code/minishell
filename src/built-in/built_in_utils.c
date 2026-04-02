@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 12:51:04 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/09 22:13:56 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/30 17:42:06 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,14 @@ char	**arr_builtin(void)
 	builtins[6] = "exit";
 	builtins[7] = NULL;
 	return (builtins);
+}
+
+int	is_parent_builtin(char *cmd)
+{
+	if (!ft_strcmp(cmd, "cd")
+		|| !ft_strcmp(cmd, "export")
+		|| !ft_strcmp(cmd, "unset")
+		|| !ft_strcmp(cmd, "exit"))
+		return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 20:10:22 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/26 16:07:06 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/03/31 15:36:34 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,9 @@ void	free_split(char **split)
 	free(split);
 }
 
-char	**env_list_to_array(t_envp *env_list)
+char	**env_list_to_array(t_envp *env_list, t_envp *tmp)
 {
 	char	**envp_exec;
-	t_envp	*tmp;
 	int		i;
 
 	i = 0;
@@ -60,7 +59,7 @@ char	**env_list_to_array(t_envp *env_list)
 		return (NULL);
 	tmp = env_list;
 	i = 0;
-	while(tmp)
+	while (tmp)
 	{
 		envp_exec[i] = double_join(tmp->key, "=", tmp->value);
 		if (!envp_exec[i])
