@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilemos-c <ilemos-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 14:35:25 by cris_sky          #+#    #+#             */
-/*   Updated: 2026/03/12 01:39:15 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/04/03 15:38:30 by ilemos-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_ast
 	char			*outfile;
 	int				append;
 	char			*heredoc_delim;
+	int				heredoc_fd;
 }	t_ast;
 
 t_ast	*parse(t_token *tokens, t_token **err_token);
