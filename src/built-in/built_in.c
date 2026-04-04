@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 13:30:53 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/31 17:34:49 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/04 10:37:24 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,26 @@ int	builtin_pwd(void)
 	}
 	ft_putstr_fd(pwd, 1);
 	ft_putstr_fd("\n", 1);
+	return (0);
+}
+
+int	builtin_env(t_envp *env_list)
+{
+	t_envp	*tmp;
+
+	if (!env_list)
+		return (0);
+	tmp = env_list;
+	while (tmp)
+	{
+		if (tmp->value)
+		{
+			ft_putstr_fd(tmp->key, 1);
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd(tmp->value, 1);
+			ft_putstr_fd("\n", 1);
+		}
+		tmp = tmp->next;
+	}
 	return (0);
 }
