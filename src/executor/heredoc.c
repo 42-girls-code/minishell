@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 15:46:20 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/04/10 17:41:18 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/04/10 17:51:06 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ static int	handle_heredoc(t_ast *cmd, t_minishell *shell)
 	if (!cmd->heredoc_delim)
 		return (0);
 	if (pipe(fd) < 0)
-		return (perror("pipe"), 1);
+	{
+		perror("pipe");
+		return (1);
+	}
 	if (read_heredoc(fd[1], cmd->heredoc_delim, shell))
 	{
 		close(fd[0]);
@@ -79,8 +82,7 @@ static void	run_heredoc_child(int write_fd, char *delimiter)
 		line = readline("> ");
 		if (!line)
 		{
-			ft_putstr_fd(
-				"warning: here-document delimited by end-of-file\n", 2);
+			ft_putstr_fd("warning: here-document delimited by EOF\n", 2);
 			exit(0);
 		}
 		if (ft_strcmp(line, delimiter) == 0)

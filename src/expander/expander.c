@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 17:18:13 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/10 12:21:53 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/10 18:22:40 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static char	*expand_var(char *arg, t_minishell *shell);
 static void	expand_args(char **args, t_minishell *shell);
 static void	expand_redirection(char **file, t_minishell *shell);
+static char	*join_and_free(char *s1, char *s2);
 
 void	expand_ast(t_ast *root, t_minishell *shell)
 {
@@ -72,7 +73,7 @@ static char	*expand_var(char *arg, t_minishell *shell)
 			else
 			{
 				i = 0;
-				while (ft_isalnum(*arg) || *arg == '_')
+				while ((ft_isalnum(*arg) || *arg == '_') && i < 255)
 					key[i++] = *arg++;
 				key[i] = '\0';
 				value = get_env_value(shell->env, key);
@@ -81,14 +82,23 @@ static char	*expand_var(char *arg, t_minishell *shell)
 				else
 					tmp = ft_strdup(value);
 			}
-			new_str = ft_strjoin(new_str, tmp);
+			if (!tmp)
+			{
+				free(new_str);
+				return (NULL);
+			}
+			new_str = join_and_free(new_str, tmp);
 			free(tmp);
+			if (!new_str)
+				return (NULL);
 		}
 		else
 		{
 			c[0] = *arg;
 			c[1] = '\0';
-			new_str = ft_strjoin(new_str, c);
+			new_str = join_and_free(new_str, c);
+			if (!new_str)
+				return (NULL);
 			arg++;
 		}
 	}
@@ -104,4 +114,13 @@ static void	expand_redirection(char **file, t_minishell *shell)
 		new = ft_strdup("");
 	free(*file);
 	*file = new;
+}
+
+static char	*join_and_free(char *s1, char *s2)
+{
+	char	*new_str;
+
+	new_str = ft_strjoin(s1, s2);
+	free(s1);
+	return (new_str);
 }

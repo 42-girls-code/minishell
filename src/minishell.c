@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 20:19:24 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/10 17:19:10 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/04/10 18:11:25 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,18 @@ static void	init_t_minishell(t_minishell *shell, char *envp[])
 	shell->last_status = 0;
 	shell->env = init_env(envp);
 }
- 
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	char		*line;
 	t_minishell	shell;
- 
-	(void)argc;
+
 	(void)argv;
+	if (argc > 1)
+	{
+		write(2, "minishell: this program does not accept arguments\n", 51);
+		return (1);
+	}
 	init_t_minishell(&shell, envp);
 	setup_signals();
 	while (1)
@@ -74,4 +78,3 @@ int	main(int argc, char *argv[], char *envp[])
 	free_env_list(shell.env);
 	return (0);
 }
- 
