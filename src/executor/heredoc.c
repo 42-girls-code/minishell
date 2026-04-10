@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 15:46:20 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/04/09 15:56:59 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/10 15:41:05 by cris_sky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	read_heredoc(int write_fd, char *delimiter, t_minishell *shell)
 		if (!line)
 		{
 			setup_signals();
-			return (1);
+			return (0);
 		}
 		if (ft_strcmp(line, delimiter) == 0)
 		{
@@ -98,8 +98,6 @@ static void	handle_sigint_heredoc(int sig)
 	(void)sig;
 	g_signal = SIGINT;
 	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
 	rl_done = 1;
 }
 
