@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.c                                           :+:      :+:    :+:   */
+/*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 17:18:13 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/01 21:45:54 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/10 12:21:53 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,6 @@ void	expand_ast(t_ast *root, t_minishell *shell)
 	expand_ast(root->right, shell);
 }
 
-static char	*expand_var(char *arg, t_minishell *shell)
-{
-	char	*value;
-
-	if (arg[0] != '$')
-		return (ft_strdup(arg));
-	if (!ft_strcmp(arg, "$?"))
-		return (ft_itoa(shell->last_status));
-	value = get_env_value(shell->env, arg + 1);
-	if (!value)
-		return (ft_strdup(""));
-	return (ft_strdup(value));
-}
-
 static void	expand_args(char **args, t_minishell *shell)
 {
 	int		i;
@@ -61,6 +47,52 @@ static void	expand_args(char **args, t_minishell *shell)
 		args[i] = new;
 		i++;
 	}
+}
+
+static char	*expand_var(char *arg, t_minishell *shell)
+{
+	char	*new_str;
+	char	*tmp;
+	char	key[256];
+	char	*value;
+	int		i;
+	char	c[2];
+
+	new_str = ft_strdup("");
+	while (*arg)
+	{
+		if (*arg == '$')
+		{
+			arg++;
+			if (*arg == '?')
+			{
+				tmp = ft_itoa(shell->last_status);
+				arg++;
+			}
+			else
+			{
+				i = 0;
+				while (ft_isalnum(*arg) || *arg == '_')
+					key[i++] = *arg++;
+				key[i] = '\0';
+				value = get_env_value(shell->env, key);
+				if (!value)
+					tmp = ft_strdup("");
+				else
+					tmp = ft_strdup(value);
+			}
+			new_str = ft_strjoin(new_str, tmp);
+			free(tmp);
+		}
+		else
+		{
+			c[0] = *arg;
+			c[1] = '\0';
+			new_str = ft_strjoin(new_str, c);
+			arg++;
+		}
+	}
+	return (new_str);
 }
 
 static void	expand_redirection(char **file, t_minishell *shell)

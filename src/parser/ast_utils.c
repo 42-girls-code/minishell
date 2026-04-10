@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 13:55:29 by cris_sky          #+#    #+#             */
-/*   Updated: 2026/03/09 14:49:34 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/04/09 11:19:36 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_ast	*create_node(t_node_type type)
 	node->outfile = NULL;
 	node->append = 0;
 	node->heredoc_delim = NULL;
+	node->heredoc_fd = -1;
 	return (node);
 }
 
@@ -59,6 +60,8 @@ void	free_ast(t_ast *ast)
 		free(ast->outfile);
 	if (ast->heredoc_delim)
 		free(ast->heredoc_delim);
+	if (ast->heredoc_fd != -1)
+		close(ast->heredoc_fd);
 	free(ast);
 }
 

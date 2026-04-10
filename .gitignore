@@ -15,4 +15,3 @@ minishell
 *.exe
 *.out
 
-pipe_chat.c

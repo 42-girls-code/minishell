@@ -6,7 +6,7 @@
 #    By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/17 17:17:17 by ingrid            #+#    #+#              #
-#    Updated: 2026/03/31 18:56:49 by ingrid           ###   ########.fr        #
+#    Updated: 2026/04/08 16:56:14 by ingrid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ SRCS = $(SRC_DIR)/minishell.c \
 	$(SRC_DIR)/executor/execute_utils.c \
 	$(SRC_DIR)/executor/execute_cmd.c \
 	$(SRC_DIR)/executor/execute_pipe.c \
+	$(SRC_DIR)/executor/heredoc.c \
 	$(SRC_DIR)/built-in/built_in.c \
 	$(SRC_DIR)/built-in/built_in_utils.c \
 	$(SRC_DIR)/built-in/built_in_cd.c \
@@ -69,7 +70,7 @@ SRCS = $(SRC_DIR)/minishell.c \
 	$(SRC_DIR)/parser/parse_primary.c \
 	$(SRC_DIR)/parser/parse.c \
 	$(SRC_DIR)/parser/signals.c \
-	$(SRC_DIR)/expand/expand.c
+	$(SRC_DIR)/expander/expander.c
 
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

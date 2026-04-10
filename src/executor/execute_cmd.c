@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:17:08 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/04/02 16:21:05 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/09 10:28:11 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static int	exec_with_fork(t_ast *cmd, t_minishell *shell)
 		return (perror("waitpid"), 1);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
 	return (1);
 }
 
@@ -80,7 +82,17 @@ static int	exec_without_fork(t_ast *cmd, t_minishell *shell)
 
 static int	setup_redirection(t_ast *cmd)
 {
-	if (cmd->infile)
+	if (cmd->heredoc_fd != -1) //adicionado por causa do heredoc
+	{
+		if (dup2(cmd->heredoc_fd, STDIN_FILENO) < 0)
+		{
+			perror("dup2");
+			return (1);
+		}
+		close(cmd->heredoc_fd);
+		cmd->heredoc_fd = -1;
+	}
+	else if (cmd->infile)
 	{
 		if (open_and_dup(cmd->infile, O_RDONLY, STDIN_FILENO))
 			return (1);

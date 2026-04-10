@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:12:41 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/04/04 10:22:28 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/08 16:07:37 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	execute_ast(t_ast *node, t_minishell *shell)
 {
 	if (!node)
-		return (0);
+		return (shell->last_status);
 	if (node->type == NODE_PIPE)
 		return (exec_pipe(node, shell));
 	if (node->type == NODE_COMMAND)
@@ -24,7 +24,7 @@ int	execute_ast(t_ast *node, t_minishell *shell)
 	// 	return (exec_and_or(node->left, node->right, 0, env_list));
 	// if (node->type == NODE_OR)
 	// 	return (exec_and_or(node->left, node->right, 1, env_list));
-	return (0);
+	return (shell->last_status);
 }
 
 int	exec_builtin(t_ast *cmd, t_minishell *shell)

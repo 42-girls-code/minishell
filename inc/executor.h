@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:10:18 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/04/02 16:14:27 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/09 14:56:22 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,8 @@ int		open_and_dup(char *file, int flags, int target_fd);
 
 // execute_pipe
 int		exec_pipe(t_ast *node, t_minishell *shell);
+
+//heredoc.c
+int		prepare_heredocs(t_ast *node, t_minishell *shell);
 
 #endif
