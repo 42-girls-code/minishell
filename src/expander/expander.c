@@ -6,16 +6,19 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 17:18:13 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/10 18:22:40 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/11 13:58:32 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 
-static char	*expand_var(char *arg, t_minishell *shell);
 static void	expand_args(char **args, t_minishell *shell);
+static char	*expand_var(char *arg, t_minishell *shell);
+static void	handler_dollar_expansion(char **arg, t_lexer *lex,
+	t_minishell *shell);
+static void	add_string_to_buffer(t_lexer *lex, char *str);
 static void	expand_redirection(char **file, t_minishell *shell);
-static char	*join_and_free(char *s1, char *s2);
+static void	init_lexer_buffer(t_lexer *lex);
 
 void	expand_ast(t_ast *root, t_minishell *shell)
 {
@@ -38,12 +41,14 @@ static void	expand_args(char **args, t_minishell *shell)
 	int		i;
 	char	*new;
 
+	if (!args)
+		return ;
 	i = 0;
 	while (args[i])
 	{
 		new = expand_var(args[i], shell);
-		if (!new)
-			new = ft_strdup("");
+		// if (!new) passar responsabilidade para o executor
+		// 	new = ft_strdup("");
 		free(args[i]);
 		args[i] = new;
 		i++;
@@ -52,57 +57,86 @@ static void	expand_args(char **args, t_minishell *shell)
 
 static char	*expand_var(char *arg, t_minishell *shell)
 {
-	char	*new_str;
-	char	*tmp;
-	char	key[256];
-	char	*value;
-	int		i;
-	char	c[2];
+	t_lexer	expand_lex;
+	int		state;
+	char	*result;
 
-	new_str = ft_strdup("");
+	if (!arg)
+		return (NULL);
+	init_lexer_buffer(&expand_lex);
+	state  = DEFAULT;
 	while (*arg)
 	{
-		if (*arg == '$')
+		if (*arg == '\'' && state == DEFAULT)
 		{
+			state = S_QUOTE;
 			arg++;
-			if (*arg == '?')
-			{
-				tmp = ft_itoa(shell->last_status);
-				arg++;
-			}
-			else
-			{
-				i = 0;
-				while ((ft_isalnum(*arg) || *arg == '_') && i < 255)
-					key[i++] = *arg++;
-				key[i] = '\0';
-				value = get_env_value(shell->env, key);
-				if (!value)
-					tmp = ft_strdup("");
-				else
-					tmp = ft_strdup(value);
-			}
-			if (!tmp)
-			{
-				free(new_str);
-				return (NULL);
-			}
-			new_str = join_and_free(new_str, tmp);
-			free(tmp);
-			if (!new_str)
-				return (NULL);
 		}
+		else if (*arg == '\'' && state == S_QUOTE)
+		{
+			state = DEFAULT;
+			arg++;
+		}
+		else if (*arg == '\"' && state == DEFAULT)
+		{
+			state = D_QUOTE;
+			arg++;
+		}
+		else if (*arg == '\"' && state == D_QUOTE)
+		{
+			state = DEFAULT;
+			arg++;
+		}
+		else if (*arg == '$' && state != S_QUOTE)
+			handler_dollar_expansion(&arg, &expand_lex, shell);
 		else
 		{
-			c[0] = *arg;
-			c[1] = '\0';
-			new_str = join_and_free(new_str, c);
-			if (!new_str)
-				return (NULL);
+			buffer_add_char(&expand_lex, *arg);
 			arg++;
 		}
 	}
-	return (new_str);
+	result = ft_strdup(expand_lex.buffer);
+	free(expand_lex.buffer);
+	return (result);
+}
+
+static void	handler_dollar_expansion(char **arg, t_lexer *lex,
+	t_minishell *shell)
+{
+	char	key[256];
+	char	*value;
+	int		i;
+
+	(*arg)++;
+	if (**arg == '?')
+	{
+		value = ft_itoa(shell->last_status);
+		add_string_to_buffer(lex, value);
+		free(value);
+		(*arg)++;
+	}
+	else if (ft_isalnum(**arg) || **arg == '_')
+	{
+		i = 0;
+		while ((ft_isalnum(**arg) || **arg == '_') && i < 255)
+			key[i++] = *(*arg)++;
+		key[i] = '\0';
+		value = get_env_value(shell->env, key);
+		if (value)
+			add_string_to_buffer(lex, value);
+	}
+	else
+		buffer_add_char(lex, '$');
+}
+
+static void	init_lexer_buffer(t_lexer *lex)
+{
+	lex->capacity = 128;
+	lex->buffer = malloc(lex->capacity);
+	if (!lex->buffer)
+		exit (EXIT_FAILURE);
+	lex->buffer[0] = '\0';
+	lex->buf_size = 0;
 }
 
 static void	expand_redirection(char **file, t_minishell *shell)
@@ -116,11 +150,16 @@ static void	expand_redirection(char **file, t_minishell *shell)
 	*file = new;
 }
 
-static char	*join_and_free(char *s1, char *s2)
+static void	add_string_to_buffer(t_lexer *lex, char *str)
 {
-	char	*new_str;
+	int	i;
 
-	new_str = ft_strjoin(s1, s2);
-	free(s1);
-	return (new_str);
+	if (!str)
+		return;
+	i = 0;
+	while (str[i])
+	{
+		buffer_add_char(lex, str[i]);
+		i++;
+	}
 }
