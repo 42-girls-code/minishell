@@ -6,16 +6,14 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 15:46:20 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/04/10 17:51:06 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/11 19:05:16 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "executor.h"
 #include "minishell.h"
 #include <readline/readline.h>
 #include <signal.h>
-#include <sys/wait.h>
 
 static int	handle_heredoc(t_ast *cmd, t_minishell *shell);
 static int	read_heredoc(int write_fd, char *delimiter, t_minishell *shell);

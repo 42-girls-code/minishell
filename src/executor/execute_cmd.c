@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:17:08 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/04/09 10:28:11 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/11 19:14:56 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int	exec_without_fork(t_ast *cmd, t_minishell *shell)
 
 static int	setup_redirection(t_ast *cmd)
 {
-	if (cmd->heredoc_fd != -1) //adicionado por causa do heredoc
+	if (cmd->heredoc_fd != -1)
 	{
 		if (dup2(cmd->heredoc_fd, STDIN_FILENO) < 0)
 		{

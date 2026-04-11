@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:57:28 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/09 15:09:28 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/11 19:28:57 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	set_env_value(t_envp **env_list, char *key, char *new_value);
 void	free_env_list(t_envp *list);
 void	free_split(char **split);
 char	**env_list_to_array(t_envp *env_list, t_envp *tmp);
+void	init_t_minishell(t_minishell *shell, char *envp[]);
+void	cleanup_shell(t_minishell *shell);
 
 extern int	g_signal;
 
