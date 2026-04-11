@@ -6,7 +6,7 @@
 #    By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/17 17:17:17 by ingrid            #+#    #+#              #
-#    Updated: 2026/04/08 16:56:14 by ingrid           ###   ########.fr        #
+#    Updated: 2026/04/10 22:30:38 by ingrid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,9 @@ SRCS = $(SRC_DIR)/minishell.c \
 	$(SRC_DIR)/built-in/built_in.c \
 	$(SRC_DIR)/built-in/built_in_utils.c \
 	$(SRC_DIR)/built-in/built_in_cd.c \
+	$(SRC_DIR)/built-in/built_in_exit.c \
+	$(SRC_DIR)/built-in/built_in_export.c \
+	$(SRC_DIR)/built-in/built_in_unset.c \
 	$(SRC_DIR)/parser/ast_utils.c \
 	$(SRC_DIR)/parser/ast_utils2.c \
 	$(SRC_DIR)/parser/input.c \

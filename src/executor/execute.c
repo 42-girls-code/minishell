@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:12:41 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/04/08 16:07:37 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/10 22:30:27 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ int	exec_builtin(t_ast *cmd, t_minishell *shell)
 		return (builtin_pwd());
 	if (!ft_strcmp(t_cmd, "env"))
 		return (builtin_env(shell->env));
-	//if (!ft_strcmp(t_cmd, "export"))// estou aqui!!!
+	if (!ft_strcmp(t_cmd, "export"))
+		return (builtin_export(cmd->args, shell));
+	if (!ft_strcmp(t_cmd, "unset"))
+		return (builtin_unset(cmd->args, shell));
+	if (!ft_strcmp(t_cmd, "exit"))
+		return (builtin_exit(cmd->args, shell));
 	return (0);
 }
