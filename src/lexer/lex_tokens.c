@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 11:49:51 by ingrid            #+#    #+#             */
-/*   Updated: 2026/02/26 00:54:16 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/11 11:25:00 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	add_operador_token(t_lexer *lex, t_token_type type)
 void	add_token(t_lexer *lex, t_token_type type, char *buffer)
 {
 	t_token	*new;
+	t_token	*tmp;
 
 	new = new_token(type, buffer);
 	if (!new)
@@ -45,6 +46,13 @@ void	add_token(t_lexer *lex, t_token_type type, char *buffer)
 	}
 	else
 	{
+		if (!lex->tail)
+		{
+			tmp = lex->tokens;
+			while (tmp->next)
+				tmp = tmp->next;
+			lex->tail = tmp;
+		}
 		lex->tail->next = new;
 		lex->tail = new;
 	}

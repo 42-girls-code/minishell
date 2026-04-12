@@ -6,7 +6,7 @@
 #    By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/22 11:29:52 by ilemos-c          #+#    #+#              #
-#    Updated: 2026/02/17 19:56:54 by ingrid           ###   ########.fr        #
+#    Updated: 2026/03/09 22:11:42 by ingrid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,7 @@ SRCS = $(SRC_DIR)/ft_atoi.c \
 	$(SRC_DIR)/ft_strlcpy.c \
 	$(SRC_DIR)/ft_strlen.c \
 	$(SRC_DIR)/ft_strmapi.c \
+	$(SRC_DIR)/ft_strcmp.c \
 	$(SRC_DIR)/ft_strncmp.c \
 	$(SRC_DIR)/ft_strnstr.c \
 	$(SRC_DIR)/ft_strrchr.c \

@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 11:54:23 by ingrid            #+#    #+#             */
-/*   Updated: 2026/02/26 00:29:30 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/11 10:58:43 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_lexer
 	t_lex_state	state;
 	char		*buffer;
 	size_t		buf_size;
+	size_t		capacity;
 	size_t		word_started;
 	t_token		*tokens;
 	t_token		*tail;
