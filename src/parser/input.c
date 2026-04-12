@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:56:55 by cris_sky          #+#    #+#             */
-/*   Updated: 2026/04/11 19:16:15 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/11 21:29:46 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "parser.h"
 #include "executor.h"
 #include "expander.h"
+#include "heredoc.h"
 
 int	is_empty(char *line)
 {

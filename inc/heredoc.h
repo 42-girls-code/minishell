@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.h                                         :+:      :+:    :+:   */
+/*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/31 18:35:12 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/11 20:14:07 by ingrid           ###   ########.fr       */
+/*   Created: 2026/04/11 20:17:52 by ingrid            #+#    #+#             */
+/*   Updated: 2026/04/11 20:25:07 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPANDER_H
-# define EXPANDER_H
+#ifndef HEREDOC_H
+# define HEREDOC_H
 
 # include "parser.h"
-# include "lexer.h"
 
-typedef enum e_ex_state
-{
-	DEFAULT,
-	S_QUOTE,
-	D_QUOTE,
-}	t_ex_state;
-
-void	expand_ast(t_ast *root, t_minishell *shell);
-char	*expand_var(char *arg, t_minishell *shell);
-void	init_lexer_buffer(t_lexer *lex);
-void	handler_expansion(char **arg, t_lexer *lex, t_minishell *shell);
+int		prepare_heredocs(t_ast *node, t_minishell *shell);
+char	*expand_var_heredoc(char *line, t_minishell *shell);
 
 #endif

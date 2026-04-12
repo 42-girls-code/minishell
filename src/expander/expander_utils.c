@@ -6,15 +6,13 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 18:58:56 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/11 19:06:33 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/11 21:26:31 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static void	init_lexer_buffer(t_lexer *lex);
 static void	handle_quotes(char c, int *state, t_lexer *lex);
-static void	handler_expansion(char **arg, t_lexer *lex, t_minishell *shell);
 static void	add_string_to_buffer(t_lexer *lex, char *str);
 
 char	*expand_var(char *arg, t_minishell *shell)
@@ -30,7 +28,7 @@ char	*expand_var(char *arg, t_minishell *shell)
 	while (*arg)
 	{
 		if (*arg == '\'' || *arg == '\"')
-			handle_quotes(*arg, &state, &expand_lex);
+			handle_quotes(*arg++, &state, &expand_lex);
 		else if (*arg == '$' && state != S_QUOTE)
 			handler_expansion(&arg, &expand_lex, shell);
 		else
@@ -44,7 +42,7 @@ char	*expand_var(char *arg, t_minishell *shell)
 	return (result);
 }
 
-static void	init_lexer_buffer(t_lexer *lex)
+void	init_lexer_buffer(t_lexer *lex)
 {
 	lex->capacity = 128;
 	lex->buffer = malloc(lex->capacity);
@@ -76,7 +74,7 @@ static void	handle_quotes(char c, int *state, t_lexer *lex)
 	}
 }
 
-static void	handler_expansion(char **arg, t_lexer *lex, t_minishell *shell)
+void	handler_expansion(char **arg, t_lexer *lex, t_minishell *shell)
 {
 	char	key[256];
 	char	*value;
@@ -101,7 +99,10 @@ static void	handler_expansion(char **arg, t_lexer *lex, t_minishell *shell)
 			add_string_to_buffer(lex, value);
 	}
 	else
+	{
 		buffer_add_char(lex, '$');
+		(*arg)++;
+	}
 }
 
 static void	add_string_to_buffer(t_lexer *lex, char *str)
