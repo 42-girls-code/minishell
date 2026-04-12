@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 11:39:40 by ingrid            #+#    #+#             */
-/*   Updated: 2026/02/26 00:53:03 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/11 11:30:49 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,12 @@ static void	enter_single_quote(t_lexer *lex)
 {
 	lex->state = LEX_SINGLE_QUOTE;
 	lex->word_started = 1;
-	lex->i++;
 }
 
 static void	enter_double_quote(t_lexer *lex)
 {
 	lex->state = LEX_DOUBLE_QUOTE;
 	lex->word_started = 1;
-	lex->i++;
 }
 
 static void	handle_word_char(t_lexer *lex, char c)

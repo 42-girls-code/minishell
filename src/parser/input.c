@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:56:55 by cris_sky          #+#    #+#             */
-/*   Updated: 2026/04/10 17:16:34 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/04/11 21:29:46 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 #include "executor.h"
-#include "expand.h"
+#include "expander.h"
+#include "heredoc.h"
 
 int	is_empty(char *line)
 {
@@ -47,17 +48,11 @@ void	handle_input(char *line, t_minishell *shell)
 	if (!root)
 	{
 		print_parse_error(err_token);
-		free_tokens(tokens);
-		return ;
+		return (free_tokens(tokens));
 	}
 	expand_ast(root, shell);
-	if (prepare_heredocs(root, shell))
-	{
-		free_ast(root);
-		free_tokens(tokens);
-		return ;
-	}
-	shell->last_status = execute_ast(root, shell);
+	if (!prepare_heredocs(root, shell))
+		shell->last_status = execute_ast(root, shell);
 	free_ast(root);
 	free_tokens(tokens);
 }

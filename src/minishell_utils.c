@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envp_utils.c                                       :+:      :+:    :+:   */
+/*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 20:10:22 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/31 15:36:34 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/11 19:39:45 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "executor.h"
+#include <readline/readline.h>
 
 void	free_env_list(t_envp *list)
 {
@@ -69,4 +70,16 @@ char	**env_list_to_array(t_envp *env_list, t_envp *tmp)
 	}
 	envp_exec[i] = NULL;
 	return (envp_exec);
+}
+
+void	init_t_minishell(t_minishell *shell, char *envp[])
+{
+	shell->last_status = 0;
+	shell->env = init_env(envp);
+}
+
+void	cleanup_shell(t_minishell *shell)
+{
+	rl_clear_history();
+	free_env_list(shell->env);
 }

@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.h                                           :+:      :+:    :+:   */
+/*   heredoc_signals.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/31 18:35:12 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/01 17:18:36 by ingrid           ###   ########.fr       */
+/*   Created: 2026/04/12 15:29:53 by ingrid            #+#    #+#             */
+/*   Updated: 2026/04/12 15:31:32 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPAND_H
-# define EXPAND_H
+#include "heredoc.h"
+#include <signal.h>
 
-# include "parser.h"
+static void	child_sigint_handler(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	exit(130);
+}
 
-void	expand_ast(t_ast *root, t_minishell *shell);
+void	setup_heredoc_signals(void)
+{
+	struct sigaction	sa;
 
-#endif
+	sa.sa_handler = child_sigint_handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
+}

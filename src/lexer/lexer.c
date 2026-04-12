@@ -6,7 +6,7 @@
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 12:00:41 by ingrid            #+#    #+#             */
-/*   Updated: 2026/02/27 13:09:55 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/11 11:18:40 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	init_lexer(t_lexer *lex, char *input)
 	lex->input = input;
 	lex->i = 0;
 	lex->state = LEX_DEFAULT;
-	lex->buffer = malloc(ft_strlen(lex->input) + 1);
+	lex->capacity = 128;
+	lex->buffer = malloc(lex->capacity);
 	if (!lex->buffer)
 		exit (EXIT_FAILURE);
 	lex->buffer[0] = '\0';
@@ -55,13 +56,18 @@ void	init_lexer(t_lexer *lex, char *input)
 
 void	handle_double_quote(t_lexer *lex)
 {
+	buffer_add_char(lex, lex->input[lex->i]);
+	lex->i++;
 	while (lex->input[lex->i] && lex->input[lex->i] != '"')
 	{
 		buffer_add_char(lex, lex->input[lex->i]);
 		lex->i++;
 	}
 	if (lex->input[lex->i] == '"')
+	{
+		buffer_add_char(lex, lex->input[lex->i]);
 		lex->i++;
+	}
 	else
 		lex->error = 1;
 	lex->state = LEX_DEFAULT;
@@ -69,13 +75,18 @@ void	handle_double_quote(t_lexer *lex)
 
 void	handle_single_quote(t_lexer *lex)
 {
+	buffer_add_char(lex, lex->input[lex->i]);
+	lex->i++;
 	while (lex->input[lex->i] && lex->input[lex->i] != '\'')
 	{
 		buffer_add_char(lex, lex->input[lex->i]);
 		lex->i++;
 	}
 	if (lex->input[lex->i] == '\'')
+	{
+		buffer_add_char(lex, lex->input[lex->i]);
 		lex->i++;
+	}
 	else
 		lex->error = 1;
 	lex->state = LEX_DEFAULT;
