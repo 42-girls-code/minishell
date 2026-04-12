@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expander_handler.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 15:52:45 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/12 16:04:00 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/12 18:51:41 by cris_sky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
 static void	handle_quotes(char c, int *state, t_lexer *lex);
+static void	expand_exit_status(t_lexer *lex, t_minishell *shell, char **arg);
 
 char	*expand_var(char *arg, t_minishell *shell)
 {
@@ -93,8 +94,5 @@ void	handler_expansion(char **arg, t_lexer *lex, t_minishell *shell)
 			add_string_to_buffer(lex, value);
 	}
 	else
-	{
 		buffer_add_char(lex, '$');
-		(*arg)++;
-	}
 }
