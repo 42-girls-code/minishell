@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.h                                          :+:      :+:    :+:   */
+/*   heredoc_signals.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/11 20:17:52 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/12 16:01:50 by ingrid           ###   ########.fr       */
+/*   Created: 2026/04/12 15:29:53 by ingrid            #+#    #+#             */
+/*   Updated: 2026/04/12 15:31:32 by ingrid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEREDOC_H
-# define HEREDOC_H
+#include "heredoc.h"
+#include <signal.h>
 
-# include "parser.h"
-# include "minishell.h"
+static void	child_sigint_handler(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	exit(130);
+}
 
-int		prepare_heredocs(t_ast *node, t_minishell *shell);
-void	run_heredoc_child(int write_fd, char *delim, t_minishell *shell);
-char	*expand_var_heredoc(char *line, t_minishell *shell);
-void	setup_heredoc_signals(void);
+void	setup_heredoc_signals(void)
+{
+	struct sigaction	sa;
 
-#endif
+	sa.sa_handler = child_sigint_handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
+}

@@ -6,7 +6,7 @@
 #    By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/17 17:17:17 by ingrid            #+#    #+#              #
-#    Updated: 2026/04/11 20:07:32 by ingrid           ###   ########.fr        #
+#    Updated: 2026/04/12 16:02:23 by ingrid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,8 @@ SRCS = $(SRC_DIR)/minishell.c \
 	$(SRC_DIR)/executor/execute_cmd.c \
 	$(SRC_DIR)/executor/execute_pipe.c \
 	$(SRC_DIR)/executor/heredoc/heredoc.c \
-	$(SRC_DIR)/executor/heredoc/expand_var_heredoc.c \
+	$(SRC_DIR)/executor/heredoc/heredoc_utils.c \
+	$(SRC_DIR)/executor/heredoc/heredoc_signals.c \
 	$(SRC_DIR)/built-in/built_in.c \
 	$(SRC_DIR)/built-in/built_in_utils.c \
 	$(SRC_DIR)/built-in/built_in_cd.c \
@@ -75,6 +76,7 @@ SRCS = $(SRC_DIR)/minishell.c \
 	$(SRC_DIR)/parser/parse.c \
 	$(SRC_DIR)/parser/signals.c \
 	$(SRC_DIR)/expander/expander.c \
+	$(SRC_DIR)/expander/expander_handler.c \
 	$(SRC_DIR)/expander/expander_utils.c
 
 
