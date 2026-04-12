@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envp.c                                             :+:      :+:    :+:   */
+/*   minishell_envp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 22:04:35 by ingrid            #+#    #+#             */
-/*   Updated: 2026/03/26 10:50:09 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/12 18:34:41 by cris_sky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	set_env_value(t_envp **env_list, char *key, char *new_value)
 {
 	t_envp	*current;
 	char	*aux;
+	char	*tmp;
 
 	current = *env_list;
 	while (current)
@@ -95,7 +96,10 @@ void	set_env_value(t_envp **env_list, char *key, char *new_value)
 		}
 		current = current->next;
 	}
-	aux = ft_strjoin(ft_strjoin(key, "="), new_value);
+
+	tmp = ft_strjoin(key, "=");
+	aux = ft_strjoin(tmp, new_value);
+	free(tmp);
 	add_envp_list(aux, env_list);
 	free(aux);
 }
