@@ -6,18 +6,18 @@
 /*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 12:42:26 by cris_sky          #+#    #+#             */
-/*   Updated: 2026/04/10 12:42:39 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/04/12 14:58:24 by cris_sky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_in.h"
- 
+
 static int	is_numeric(char *str);
- 
+
 int	builtin_exit(char **args, t_minishell *shell)
 {
 	int	code;
- 
+
 	ft_putstr_fd("exit\n", 1);
 	if (!args[1])
 	{
@@ -40,11 +40,11 @@ int	builtin_exit(char **args, t_minishell *shell)
 	free_env_list(shell->env);
 	exit(code);
 }
- 
+
 static int	is_numeric(char *str)
 {
 	int	i;
- 
+
 	i = 0;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
@@ -58,4 +58,3 @@ static int	is_numeric(char *str)
 	}
 	return (1);
 }
- 
