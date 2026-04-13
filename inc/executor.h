@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csuomins <csuomins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:10:18 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/04/12 22:06:23 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/04/13 15:00:03 by csuomins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 //execute.c
 int		execute_ast(t_ast *node, t_minishell *shell);
 int		exec_builtin(t_ast *cmd, t_minishell *shell);
+int		apply_redir(t_redir *r);
 
 //execute_cmd
 int		exec_command(t_ast *cmd, t_minishell *shell);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csuomins <csuomins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 13:55:29 by cris_sky          #+#    #+#             */
-/*   Updated: 2026/04/12 21:03:48 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/04/13 14:53:22 by csuomins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,28 +81,4 @@ void	free_ast(t_ast *ast)
 	if (ast->heredoc_fd != -1)
 		close(ast->heredoc_fd);
 	free(ast);
-}
-
-void	print_indent(int level)
-{
-	int	i;
-
-	i = 0;
-	while (i < level)
-	{
-		printf("    ");
-		i++;
-	}
-}
-
-void	print_node_type(t_node_type type)
-{
-	if (type == NODE_COMMAND)
-		printf("COMMAND");
-	else if (type == NODE_PIPE)
-		printf("PIPE");
-	else if (type == NODE_AND)
-		printf("AND");
-	else if (type == NODE_OR)
-		printf("OR");
 }

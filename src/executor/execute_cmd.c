@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csuomins <csuomins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:17:08 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/04/12 22:11:37 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/04/13 15:00:41 by csuomins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,6 @@ int	exec_command(t_ast *cmd, t_minishell *shell)
 	if (!is_parent_builtin(cmd->args[0]))
 		return (exec_with_fork(cmd, shell));
 	return (exec_without_fork(cmd, shell));
-}
-
-static int	apply_redir(t_redir *r)
-{
-	if (r->type == TOKEN_REDIR_IN)
-		return (open_and_dup(r->file, O_RDONLY, STDIN_FILENO));
-	if (r->type == TOKEN_REDIR_OUT)
-		return (open_and_dup(r->file,
-				O_CREAT | O_WRONLY | O_TRUNC, STDOUT_FILENO));
-	if (r->type == TOKEN_APPEND)
-		return (open_and_dup(r->file,
-				O_CREAT | O_WRONLY | O_APPEND, STDOUT_FILENO));
-	return (0);
 }
 
 static int	setup_redirection(t_ast *cmd)
@@ -121,8 +108,8 @@ static void	handle_child(t_ast *cmd, t_minishell *shell)
 	path = get_cmd_path(cmd->args[0], shell);
 	if (!path)
 	{
-    	ft_putstr_fd(cmd->args[0], 2);
-    	ft_putstr_fd(": command not found\n", 2);
+		ft_putstr_fd(cmd->args[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
 		exit(127);
 	}
 	envp_exec = env_list_to_array(shell->env, &tmp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: csuomins <csuomins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:12:41 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/04/10 22:30:27 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/13 14:58:10 by csuomins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,18 @@ int	exec_builtin(t_ast *cmd, t_minishell *shell)
 		return (builtin_unset(cmd->args, shell));
 	if (!ft_strcmp(t_cmd, "exit"))
 		return (builtin_exit(cmd->args, shell));
+	return (0);
+}
+
+int	apply_redir(t_redir *r)
+{
+	if (r->type == TOKEN_REDIR_IN)
+		return (open_and_dup(r->file, O_RDONLY, STDIN_FILENO));
+	if (r->type == TOKEN_REDIR_OUT)
+		return (open_and_dup(r->file,
+				O_CREAT | O_WRONLY | O_TRUNC, STDOUT_FILENO));
+	if (r->type == TOKEN_APPEND)
+		return (open_and_dup(r->file,
+				O_CREAT | O_WRONLY | O_APPEND, STDOUT_FILENO));
 	return (0);
 }
