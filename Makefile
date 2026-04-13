@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+         #
+#    By: ilemos-c <ilemos-c@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/17 17:17:17 by ingrid            #+#    #+#              #
-#    Updated: 2026/04/12 16:02:23 by ingrid           ###   ########.fr        #
+#    Updated: 2026/04/13 14:35:35 by ilemos-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,6 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 # Valgrind
 VALGRIND = valgrind
-
-VALGRIND_FLAGS = --leak-check=full --show-leak-kinds=all \
-		--track-origins=yes --suppressions=valgrind.supp
-
-VALGRIND_STACK = $(VALGRIND_FLAGS) \
-		--read-var-info=yes --vgdb=yes --trace-children=yes \
-		--track-fds=yes
 
 # Directories
 SRC_DIR = src
@@ -110,8 +103,9 @@ fclean: clean
 
 re: fclean all
 
-# norminette:📚
-# 	@echo "$(BLUE)🧠 Running norminette...$(RESET)"
-# 	@norminette $(SRCS) -R CheckForbiddenSourceHeader || true
+valgrind: $(NAME)
+	@echo "\033[1;36m[VALGRIND]\033[0m Executando análise de memória...\n"
+	valgrind --suppressions=readline.sup --track-fds=yes \
+		--leak-check=full --show-leak-kinds=all ./$(NAME)
 
 .PHONY: all clean fclean re norminette valgrind
