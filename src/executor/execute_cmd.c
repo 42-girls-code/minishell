@@ -6,7 +6,7 @@
 /*   By: csuomins <csuomins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:17:08 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/04/13 15:00:41 by csuomins         ###   ########.fr       */
+/*   Updated: 2026/04/13 18:58:03 by csuomins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ static int	exec_without_fork(t_ast *cmd, t_minishell *shell);
 int	exec_command(t_ast *cmd, t_minishell *shell)
 {
 	if (!cmd->args || !cmd->args[0])
-	{
-		ft_putstr_fd("minishell: command not found\n", 2);
-		return (127);
-	}
+		return (0);
 	if (!is_parent_builtin(cmd->args[0]))
 		return (exec_with_fork(cmd, shell));
 	return (exec_without_fork(cmd, shell));
@@ -61,9 +58,9 @@ static int	exec_with_fork(t_ast *cmd, t_minishell *shell)
 	if (pid == 0)
 	{
 		if (setup_redirection(cmd))
-			exit(1);
+			clean_exit(shell, 1);
 		if (is_builtin(cmd->args[0]))
-			exit(exec_builtin(cmd, shell));
+			clean_exit(shell, exec_builtin(cmd, shell));
 		handle_child(cmd, shell);
 	}
 	if (waitpid(pid, &status, 0) < 0)
@@ -110,12 +107,12 @@ static void	handle_child(t_ast *cmd, t_minishell *shell)
 	{
 		ft_putstr_fd(cmd->args[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
-		exit(127);
+		clean_exit(shell, 127);
 	}
 	envp_exec = env_list_to_array(shell->env, &tmp);
 	execve(path, cmd->args, envp_exec);
 	print_strerror(cmd->args[0]);
 	free(path);
 	ft_free_array(envp_exec);
-	exit(127);
+	clean_exit(shell, 127);
 }

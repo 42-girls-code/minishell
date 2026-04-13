@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ilemos-c <ilemos-c@student.42.fr>          +#+  +:+       +#+         #
+#    By: csuomins <csuomins@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/17 17:17:17 by ingrid            #+#    #+#              #
-#    Updated: 2026/04/13 14:35:35 by ilemos-c         ###   ########.fr        #
+#    Updated: 2026/04/13 19:12:13 by csuomins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ RED = \033[1;31m
 # Files
 SRCS = $(SRC_DIR)/minishell.c \
 	$(SRC_DIR)/minishell_utils.c \
+	$(SRC_DIR)/minishell_utils2.c \
 	$(SRC_DIR)/minishell_envp.c \
 	$(SRC_DIR)/lexer/lex_handle_default_state.c \
 	$(SRC_DIR)/lexer/lex_tokens.c \

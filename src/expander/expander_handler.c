@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_handler.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csuomins <csuomins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 15:52:45 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/12 18:51:41 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/04/13 16:29:34 by csuomins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	*expand_var(char *arg, t_minishell *shell)
 	}
 	result = ft_strdup(expand_lex.buffer);
 	free(expand_lex.buffer);
+	if (!result)
+		return (NULL);
 	return (result);
 }
 
