@@ -6,7 +6,7 @@
 /*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 22:04:35 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/12 18:34:41 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/04/12 21:46:38 by cris_sky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ void	set_env_value(t_envp **env_list, char *key, char *new_value)
 		}
 		current = current->next;
 	}
-
 	tmp = ft_strjoin(key, "=");
 	aux = ft_strjoin(tmp, new_value);
 	free(tmp);

@@ -6,7 +6,7 @@
 /*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 14:27:19 by cris_sky          #+#    #+#             */
-/*   Updated: 2026/04/03 10:59:56 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/04/12 21:01:27 by cris_sky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_ast	*parse_command(t_token **tokens, t_token **err_token)
 			return (NULL);
 		}
 	}
-	if (!node->args && !node->infile && !node->outfile && !node->heredoc_delim)
+	if (!node->args && !node->redirs)
 	{
 		if (err_token)
 			*err_token = *tokens;

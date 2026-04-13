@@ -6,7 +6,7 @@
 /*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 14:16:02 by cris_sky          #+#    #+#             */
-/*   Updated: 2026/03/09 14:43:54 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/04/12 22:08:20 by cris_sky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,27 @@ static void	print_args(t_ast *node)
 	printf("]");
 }
 
+static void	print_one_redir(t_redir *r)
+{
+	if (r->type == TOKEN_REDIR_IN)
+		printf(" < %s", r->file);
+	else if (r->type == TOKEN_HEREDOC)
+		printf(" << %s", r->file);
+	else if (r->type == TOKEN_APPEND)
+		printf(" >> %s", r->file);
+	else
+		printf(" > %s", r->file);
+}
+
 static void	print_redirections(t_ast *node)
 {
-	if (node->infile)
-		printf(" < %s", node->infile);
-	if (node->heredoc_delim)
-		printf(" << %s", node->heredoc_delim);
-	if (node->outfile)
+	t_redir	*r;
+
+	r = node->redirs;
+	while (r)
 	{
-		if (node->append)
-			printf(" >> %s", node->outfile);
-		else
-			printf(" > %s", node->outfile);
+		print_one_redir(r);
+		r = r->next;
 	}
 }
 
