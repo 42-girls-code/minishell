@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 17:18:13 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/11 19:01:49 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/12 20:59:12 by cris_sky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
 static void	expand_args(char **args, t_minishell *shell);
-static void	expand_redirection(char **file, t_minishell *shell);
+static void	expand_redirs(t_redir *redirs, t_minishell *shell);
 
 void	expand_ast(t_ast *root, t_minishell *shell)
 {
@@ -22,10 +22,7 @@ void	expand_ast(t_ast *root, t_minishell *shell)
 	if (root->type == NODE_COMMAND)
 	{
 		expand_args(root->args, shell);
-		if (root->infile)
-			expand_redirection(&root->infile, shell);
-		if (root->outfile)
-			expand_redirection(&root->outfile, shell);
+		expand_redirs(root->redirs, shell);
 	}
 	expand_ast(root->left, shell);
 	expand_ast(root->right, shell);
@@ -48,13 +45,20 @@ static void	expand_args(char **args, t_minishell *shell)
 	}
 }
 
-static void	expand_redirection(char **file, t_minishell *shell)
+static void	expand_redirs(t_redir *redirs, t_minishell *shell)
 {
 	char	*new;
 
-	new = expand_var(*file, shell);
-	if (!new)
-		new = ft_strdup("");
-	free(*file);
-	*file = new;
+	while (redirs)
+	{
+		if (redirs->type != TOKEN_HEREDOC)
+		{
+			new = expand_var(redirs->file, shell);
+			if (!new)
+				new = ft_strdup("");
+			free(redirs->file);
+			redirs->file = new;
+		}
+		redirs = redirs->next;
+	}
 }

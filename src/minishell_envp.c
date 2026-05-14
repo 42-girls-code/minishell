@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_envp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csuomins <csuomins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 22:04:35 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/12 18:34:41 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/04/13 19:10:23 by csuomins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	fill_env_node(t_envp *node, char **split_result)
+{
+	node->key = ft_strdup(split_result[0]);
+	if (!node->key)
+		return (0);
+	if (split_result[1])
+		node->value = ft_strdup(split_result[1]);
+	else
+		node->value = ft_strdup("");
+	if (!node->value)
+	{
+		free(node->key);
+		return (0);
+	}
+	node->next = NULL;
+	return (1);
+}
 
 static t_envp	*new_env_node(char *envp)
 {
@@ -26,12 +44,12 @@ static t_envp	*new_env_node(char *envp)
 		free(node);
 		return (NULL);
 	}
-	node->key = ft_strdup(split_result[0]);
-	if (split_result[1])
-		node->value = ft_strdup(split_result[1]);
-	else
-		node->value = ft_strdup("");
-	node->next = NULL;
+	if (!fill_env_node(node, split_result))
+	{
+		free_split(split_result);
+		free(node);
+		return (NULL);
+	}
 	free_split(split_result);
 	return (node);
 }
@@ -68,17 +86,6 @@ t_envp	*init_env(char *envp[])
 	return (env_list);
 }
 
-char	*get_env_value(t_envp *list, char *key)
-{
-	while (list)
-	{
-		if (!ft_strcmp(list->key, key))
-			return (list->value);
-		list = list->next;
-	}
-	return (NULL);
-}
-
 void	set_env_value(t_envp **env_list, char *key, char *new_value)
 {
 	t_envp	*current;
@@ -96,10 +103,13 @@ void	set_env_value(t_envp **env_list, char *key, char *new_value)
 		}
 		current = current->next;
 	}
-
 	tmp = ft_strjoin(key, "=");
+	if (!tmp)
+		return ;
 	aux = ft_strjoin(tmp, new_value);
 	free(tmp);
+	if (!aux)
+		return ;
 	add_envp_list(aux, env_list);
 	free(aux);
 }

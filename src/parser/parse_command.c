@@ -6,7 +6,7 @@
 /*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 14:03:43 by cris_sky          #+#    #+#             */
-/*   Updated: 2026/03/09 14:46:21 by cris_sky         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:57:53 by cris_sky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,25 @@ int	add_arg(t_ast *node, char *value)
 	return (1);
 }
 
+static void	add_redir_to_list(t_ast *node, t_token_type type, char *file)
+{
+	t_redir	*r;
+	t_redir	*tmp;
+
+	r = new_redir(type, file);
+	if (!r)
+		return ;
+	if (!node->redirs)
+	{
+		node->redirs = r;
+		return ;
+	}
+	tmp = node->redirs;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = r;
+}
+
 static int	validate_redirection(t_token *file, t_token **err_token)
 {
 	if (!file || file->type != TOKEN_WORD)
@@ -59,32 +78,6 @@ static int	validate_redirection(t_token *file, t_token **err_token)
 	return (1);
 }
 
-static void	apply_redirection(t_ast *node, t_token *redir, t_token *file)
-{
-	if (redir->type == TOKEN_REDIR_IN)
-	{
-		free(node->infile);
-		node->infile = ft_strdup(file->value);
-	}
-	else if (redir->type == TOKEN_REDIR_OUT)
-	{
-		free(node->outfile);
-		node->outfile = ft_strdup(file->value);
-		node->append = 0;
-	}
-	else if (redir->type == TOKEN_APPEND)
-	{
-		free(node->outfile);
-		node->outfile = ft_strdup(file->value);
-		node->append = 1;
-	}
-	else if (redir->type == TOKEN_HEREDOC)
-	{
-		free(node->heredoc_delim);
-		node->heredoc_delim = ft_strdup(file->value);
-	}
-}
-
 int	handle_redirection(t_ast *node, t_token **tokens,
 		t_token **err_token)
 {
@@ -95,7 +88,7 @@ int	handle_redirection(t_ast *node, t_token **tokens,
 	file = redir->next;
 	if (!validate_redirection(file, err_token))
 		return (0);
-	apply_redirection(node, redir, file);
+	add_redir_to_list(node, redir->type, file->value);
 	*tokens = file->next;
 	return (1);
 }

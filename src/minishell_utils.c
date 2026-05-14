@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: csuomins <csuomins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 20:10:22 by ingrid            #+#    #+#             */
-/*   Updated: 2026/04/11 19:39:45 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/13 19:05:00 by csuomins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "executor.h"
 #include <readline/readline.h>
+
+static int	fill_env_array(char **envp_exec, t_envp *env_list);
 
 void	free_env_list(t_envp *list)
 {
@@ -46,40 +48,54 @@ void	free_split(char **split)
 char	**env_list_to_array(t_envp *env_list, t_envp *tmp)
 {
 	char	**envp_exec;
-	int		i;
+	int		size;
 
-	i = 0;
 	tmp = env_list;
+	size = 0;
 	while (tmp)
 	{
-		i++;
+		size++;
 		tmp = tmp->next;
 	}
-	envp_exec = malloc(sizeof(char *) * (i + 1));
+	envp_exec = malloc(sizeof(char *) * (size + 1));
 	if (!envp_exec)
 		return (NULL);
+	if (!fill_env_array(envp_exec, env_list))
+	{
+		free(envp_exec);
+		return (NULL);
+	}
+	return (envp_exec);
+}
+
+static int	fill_env_array(char **envp_exec, t_envp *env_list)
+{
+	int		i;
+	t_envp	*tmp;
+
 	tmp = env_list;
 	i = 0;
 	while (tmp)
 	{
 		envp_exec[i] = double_join(tmp->key, "=", tmp->value);
 		if (!envp_exec[i])
-			return (NULL);
+		{
+			while (--i >= 0)
+				free(envp_exec[i]);
+			return (0);
+		}
 		tmp = tmp->next;
 		i++;
 	}
 	envp_exec[i] = NULL;
-	return (envp_exec);
+	return (1);
 }
 
 void	init_t_minishell(t_minishell *shell, char *envp[])
 {
 	shell->last_status = 0;
+	shell->should_exit = 0;
 	shell->env = init_env(envp);
-}
-
-void	cleanup_shell(t_minishell *shell)
-{
-	rl_clear_history();
-	free_env_list(shell->env);
+	shell->active_tokens = NULL;
+	shell->active_ast = NULL;
 }

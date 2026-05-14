@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: csuomins <csuomins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:10:18 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/04/11 20:18:46 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/13 15:00:03 by csuomins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@
 //execute.c
 int		execute_ast(t_ast *node, t_minishell *shell);
 int		exec_builtin(t_ast *cmd, t_minishell *shell);
+int		apply_redir(t_redir *r);
 
 //execute_cmd
 int		exec_command(t_ast *cmd, t_minishell *shell);
 
 //execute_utils.c
-char	*get_cmd_path(char *cmd);
+char	*get_cmd_path(char *cmd, t_minishell *shell);
 char	*double_join(char *s1, char *s2, char *s3);
 void	ft_free_array(char **array);
 void	print_strerror(char *cmd);

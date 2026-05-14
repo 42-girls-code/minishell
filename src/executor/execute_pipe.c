@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: csuomins <csuomins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:15:57 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/04/09 11:46:20 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/13 18:52:36 by csuomins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ static pid_t	fork_left(t_ast *node, t_minishell *shell, int fd[2])
 		if (dup2(fd[1], STDOUT_FILENO) < 0)
 		{
 			perror("dup2");
-			exit(1);
+			clean_exit(shell, 1);
 		}
 		close(fd[1]);
-		exit(execute_ast(node->left, shell));
+		clean_exit(shell, execute_ast(node->left, shell));
 	}
 	return (pid);
 }
@@ -80,10 +80,10 @@ static pid_t	fork_right(t_ast *node, t_minishell *shell, int fd[2])
 		if (dup2(fd[0], STDIN_FILENO) < 0)
 		{
 			perror("dup2");
-			exit(1);
+			clean_exit(shell, 1);
 		}
 		close(fd[0]);
-		exit(execute_ast(node->right, shell));
+		clean_exit(shell, execute_ast(node->right, shell));
 	}
 	return (pid);
 }

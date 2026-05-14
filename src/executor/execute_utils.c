@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cris_sky <cris_sky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 11:17:45 by ilemos-c          #+#    #+#             */
-/*   Updated: 2026/04/02 16:21:19 by ingrid           ###   ########.fr       */
+/*   Updated: 2026/04/12 22:07:36 by cris_sky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ char	*double_join(char *s1, char *s2, char *s3)
 	return (res);
 }
 
-char	*get_cmd_path(char *cmd)
+char	*get_cmd_path(char *cmd, t_minishell *shell)
 {
 	char	**paths_array;
 	char	*path_result;
 	char	*paths_str;
 	int		i;
 
-	paths_str = getenv("PATH");
+	paths_str = get_env_value(shell->env, "PATH");
 	if (!paths_str)
 		return (NULL);
 	paths_array = ft_split(paths_str, ':');
