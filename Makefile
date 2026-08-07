@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: csuomins <csuomins@student.42.fr>          +#+  +:+       +#+         #
+#    By: ingrid <ingrid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/17 17:17:17 by ingrid            #+#    #+#              #
-#    Updated: 2026/04/13 19:12:13 by csuomins         ###   ########.fr        #
+#    Updated: 2026/08/06 21:39:37 by ingrid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,16 +81,17 @@ OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	@echo "$(YELLOW)[MiniShell]$(RESET) Linking objects..."
+# 	@echo "$(YELLOW)[MiniShell]$(RESET) Linking objects..."
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 	@echo "$(GREEN)[OK]$(RESET) $(NAME) compiled successfully."
+	@$(MAKE) --no-print-directory banner
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/minishell.h
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
-	@echo "$(YELLOW)[LIB]$(RESET) Building libft..."
+# 	@echo "$(YELLOW)[LIB]$(RESET) Building libft..."
 	@$(MAKE) -C $(LIBFT_DIR) --silent
 
 clean:
@@ -108,5 +109,32 @@ valgrind: $(NAME)
 	@echo "\033[1;36m[VALGRIND]\033[0m Executando análise de memória...\n"
 	valgrind --suppressions=readline.sup --track-fds=yes \
 		--leak-check=full --show-leak-kinds=all ./$(NAME)
+
+banner:
+	@printf "\n"
+	@printf "\033[38;5;51m"
+	@printf "╔════════════════════════════════════════════════════════════════════════════════╗\n"
+	@printf "║                                                                                ║\n"
+	@printf "║      ███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗            ║\n"
+	@printf "║      ████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║            ║\n"
+	@printf "║      ██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║            ║\n"
+	@printf "║      ██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║            ║\n"
+	@printf "║      ██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗       ║\n"
+	@printf "║      ╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝       ║\n"
+	@printf "\033[38;5;99m"
+	@printf "║                          ░▒▓ WELCOME TO MINISHELL ▓▒░                          ║\n"
+	@printf "\033[38;5;51m"
+	@printf "║    [✓] Parsing source files.............................................OK     ║\n"
+	@printf "\033[38;5;207m"
+	@printf "║    [✓] Building executable..............................................OK     ║\n"
+	@printf "\033[38;5;45m"
+	@printf "║    [✓] Loading builtins.................................................OK     ║\n"
+	@printf "\033[38;5;99m"
+	@printf "║    [✓] Minishell is ready...............................................OK     ║\n"
+	@printf "\033[38;5;207m"
+	@printf "║                         Created by csuomins | ilemos-c                         ║\n"
+	@printf "\033[38;5;51m"
+	@printf "╚════════════════════════════════════════════════════════════════════════════════╝\n"
+	@printf "\033[0m\n"
 
 .PHONY: all clean fclean re norminette valgrind
